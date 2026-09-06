@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123b5d">
+<link rel="manifest" href="manifest.json">
+<title>Valórate con S-Ciencia | Radar S-Ciencia 2.0</title>
+<style>
+:root{--navy:#123b5d;--blue:#1d6fa5;--cyan:#20a4b8;--gold:#e7a93b;--bg:#f4f7fa;--card:#fff;--text:#173042;--muted:#637584;--ok:#2e8b57;--warn:#d88a18;--bad:#c44747;--line:#dbe4ea}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+header{background:linear-gradient(135deg,var(--navy),#176b8f);color:white;padding:22px 5%;position:sticky;top:0;z-index:10;box-shadow:0 3px 18px #0002}
+.brand{display:flex;align-items:center;gap:14px}.logo{width:52px;height:52px;border-radius:15px;background:#fff;color:var(--navy);display:grid;place-items:center;font-weight:900;font-size:22px}.brand h1{font-size:20px;margin:0}.brand p{margin:2px 0 0;opacity:.86;font-size:13px}
+nav{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}nav button{border:1px solid #ffffff38;background:#ffffff12;color:white;border-radius:999px;padding:8px 13px;cursor:pointer}nav button.active,nav button:hover{background:white;color:var(--navy)}
+main{max-width:1180px;margin:auto;padding:28px 18px 60px}.view{display:none}.view.active{display:block}
+.hero{background:linear-gradient(135deg,#fff,#eaf5f8);border:1px solid var(--line);border-radius:25px;padding:38px;margin-bottom:22px}.hero h2{font-size:38px;line-height:1.08;margin:0 0 10px;color:var(--navy)}.hero strong{color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 20px #1730420a}.card h3{margin-top:0;color:var(--navy)}
+.kpi{font-size:34px;font-weight:850;color:var(--blue)}.small{font-size:13px;color:var(--muted)}.tag{display:inline-block;background:#e7f3f7;color:var(--navy);padding:5px 9px;border-radius:99px;font-size:12px;font-weight:700}
+.btn{border:0;border-radius:11px;padding:11px 15px;background:var(--navy);color:white;font-weight:700;cursor:pointer}.btn.alt{background:#e9f1f5;color:var(--navy)}.btn.gold{background:var(--gold);color:#30240d}
+.progress{height:10px;background:#e4ebef;border-radius:99px;overflow:hidden}.bar{height:100%;background:linear-gradient(90deg,var(--cyan),var(--blue));width:0}
+.question{border:1px solid var(--line);border-radius:16px;padding:18px;margin:13px 0;background:#fff}.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:12px}.opts label{border:1px solid var(--line);padding:11px;border-radius:11px;cursor:pointer}.opts label:hover{background:#f2f8fa}
+.alert{padding:13px 15px;border-radius:12px;background:#fff7e6;border:1px solid #f2d49a}.safe{background:#edf8f0;border-color:#bfe0c8}
+.result{font-size:18px;padding:18px;border-radius:16px;background:#eef7fa;border:1px solid #cce6ed}.score{font-size:52px;font-weight:900;color:var(--blue)}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px;border-bottom:1px solid var(--line);font-size:13px}
+canvas{width:100%;max-height:310px;border:1px solid var(--line);border-radius:14px;background:#fff}
+footer{background:#102f46;color:#d9e7ee;padding:28px 5%;font-size:13px}.links a{color:#bde7ef}
+@media(max-width:650px){.hero h2{font-size:29px}header{position:static}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">S</div><div><h1>Valórate con S-Ciencia</h1><p>Radar S-Ciencia 2.0 · La S es de SER CONSCIENTE</p></div></div>
+ <nav id="nav"></nav>
+</header>
+<main>
+<section id="inicio" class="view active">
+ <div class="hero"><span class="tag">PROTOTIPO EDUCATIVO · DEMO</span><h2>Los datos nos muestran lo que pasa.<br><strong>La ciencia nos ayuda a comprenderlo.</strong></h2><p>Valórate con S-Ciencia convierte información estadística en reflexión, toma de decisiones y acciones de autocuidado.</p><button class="btn" onclick="go('radar')">Entrar a Mi Radar</button> <button class="btn alt" onclick="go('demo')">Modo demostración para jueces</button></div>
+ <div class="grid">
+  <div class="card"><h3>¿Qué hacemos?</h3><p>Investigamos datos oficiales, diseñamos una estrategia educativa, medimos cambios y proponemos acciones preventivas.</p></div>
+  <div class="card"><h3>¿Qué NO hacemos?</h3><p>No diagnosticamos depresión, adicciones, obesidad, riesgo suicida ni enfermedades. El radar es educativo y orientativo.</p></div>
+  <div class="card"><h3>Ruta S-Ciencia</h3><p><b>Dato → Me reconozco → Reflexiono → Decido → Actúo → Pido apoyo.</b></p></div>
+ </div>
+</section>
+
+<section id="datos" class="view">
+ <h2>Datos que hablan</h2><p>Indicadores públicos utilizados para contextualizar el proyecto. No representan el riesgo individual de un estudiante.</p>
+ <div class="grid" id="dataCards"></div>
+ <div class="card" style="margin-top:18px"><h3>Comparativo MOCIBA: ciberacoso</h3><canvas id="cyberChart" width="900" height="300"></canvas><p class="small">Fuente: INEGI, MOCIBA 2024. Población de 12 años y más usuaria de internet.</p></div>
+</section>
+
+<section id="radar" class="view">
+ <div class="card"><span class="tag">ISAC · diagnóstico educativo</span><h2>Mi Radar S-Ciencia</h2><p>Responde pensando en las últimas semanas. No escribas tu nombre. Tus respuestas son para reflexión educativa.</p>
+ <div id="consentBox" class="alert"><b>Antes de comenzar:</b> confirma que comprendes que este instrumento no es un diagnóstico clínico y que, si algo te preocupa, puedes acudir a una persona adulta de confianza o a un servicio profesional.<br><br><button class="btn" onclick="startRadar()">Entiendo y quiero comenzar</button></div>
+ <div id="radarBox" style="display:none"><div class="progress"><div id="pbar" class="bar"></div></div><div id="questions"></div><button class="btn" onclick="finishRadar()">Ver mi resultado educativo</button></div>
+ </div>
+ <div id="resultBox" style="margin-top:18px"></div>
+</section>
+
+<section id="prepost" class="view">
+ <div class="card"><h2>Pretest / Postest</h2><p>Para una investigación escolar, genera un código anónimo que el estudiante pueda recordar. Ejemplo: iniciales + dos números elegidos por él.</p>
+ <input id="code" placeholder="Código anónimo" style="padding:12px;border:1px solid var(--line);border-radius:10px">
+ <select id="phase" style="padding:12px;border:1px solid var(--line);border-radius:10px"><option value="pre">Pretest</option><option value="post">Postest</option></select>
+ <button class="btn" onclick="savePhase()">Guardar registro local</button>
+ <div id="phaseMsg" style="margin-top:12px"></div></div>
+</section>
+
+<section id="acciones" class="view">
+ <h2>¿Qué puedo hacer hoy?</h2>
+ <div class="grid">
+  <div class="card"><h3>🧠 Cuidar mi mente</h3><p>Identifica cómo te sientes, habla con alguien de confianza y busca ayuda profesional cuando lo necesites.</p></div>
+  <div class="card"><h3>📱 Cuidar mi vida digital</h3><p>Protege tus cuentas, revisa privacidad, bloquea y reporta situaciones de ciberacoso.</p></div>
+  <div class="card"><h3>🥗 Cuidar mi cuerpo</h3><p>Fortalece hábitos de alimentación, movimiento y descanso sin buscar soluciones extremas.</p></div>
+  <div class="card"><h3>🎯 Cuidar mi futuro</h3><p>Define una meta cercana, una acción concreta y una persona que pueda apoyarte.</p></div>
+ </div>
+ <div class="card" style="margin-top:18px"><h3>Mi compromiso</h3><textarea id="commit" rows="4" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px" placeholder="Hoy decido..."></textarea><br><button class="btn" onclick="saveCommit()">Guardar en este dispositivo</button><span id="commitMsg"></span></div>
+</section>
+
+<section id="apoyo" class="view">
+ <div class="card"><h2>Red de apoyo</h2><div class="alert safe"><b>Si algo te preocupa, pedir ayuda también es valorarte.</b><br>En una implementación real, esta sección debe contener únicamente directorios institucionales verificados y protocolos del plantel.</div><ul><li>Persona adulta de confianza.</li><li>Tutoría u orientación educativa del plantel.</li><li>Servicios de salud y atención psicológica institucional.</li><li>Emergencias: utiliza los servicios oficiales de tu localidad cuando exista peligro inmediato.</li></ul></div>
+</section>
+
+<section id="impacto" class="view">
+ <h2>Impacto del proyecto</h2>
+ <div class="grid"><div class="card"><h3>Indicadores</h3><p>Autocuidado · reconocimiento de factores de riesgo · toma de decisiones · búsqueda de apoyo · proyecto de vida.</p></div><div class="card"><h3>Diseño</h3><p>Pretest → intervención educativa → postest → análisis estadístico.</p></div><div class="card"><h3>Comparación</h3><p id="impactText">Aún no hay suficientes registros locales.</p></div></div>
+ <div class="card" style="margin-top:18px"><h3>Registros locales del dispositivo</h3><table><thead><tr><th>Código</th><th>Fase</th><th>Fecha</th><th>Puntaje</th></tr></thead><tbody id="records"></tbody></table></div>
+</section>
+
+<section id="demo" class="view">
+ <div class="hero"><span class="tag">MODO JURADO · DATOS FICTICIOS</span><h2>Demostración de 3 minutos</h2><p>Este modo permite mostrar el recorrido completo sin presentar datos simulados como resultados reales de investigación.</p><ol><li>Explorar un dato oficial.</li><li>Responder el Radar.</li><li>Observar el resultado educativo.</li><li>Mostrar cómo se comparan pretest y postest.</li><li>Explicar la protección de datos y la posibilidad de replicar el sistema.</li></ol><button class="btn" onclick="go('datos')">1. Ver datos</button> <button class="btn" onclick="go('radar')">2. Probar Radar</button> <button class="btn alt" onclick="go('impacto')">3. Ver impacto</button></div>
+ <div class="card"><h3>Mensaje para el jurado</h3><p><b>“No queremos que el estudiante espere a que un problema sea grave para empezar a cuidarse. Queremos enseñarle a leer los datos, reconocerse, tomar decisiones y saber cuándo pedir apoyo.”</b></p></div>
+</section>
+</main>
+<footer><b>Valórate con S-Ciencia · Radar S-Ciencia 2.0</b><br>Prototipo educativo. No sustituye evaluación clínica ni atención profesional.<br><span class="links">Fuentes: <a href="https://www.inegi.org.mx/programas/mociba/2024/" target="_blank">INEGI MOCIBA 2024</a> · <a href="https://www.inegi.org.mx/programas/edr/" target="_blank">INEGI EDR</a></span></footer>
+
+<script>
+const DATA=[
+ {title:"Ciberacoso en México",value:"21.0%",desc:"Población de 12 años y más usuaria de internet que vivió alguna situación de ciberacoso en 2024.",source:"INEGI · MOCIBA 2024"},
+ {title:"Ciberacoso en Tlaxcala",value:"24.2%",desc:"Porcentaje de usuarios de internet que experimentaron alguna situación de ciberacoso en 2024.",source:"INEGI · MOCIBA 2024"},
+ {title:"Víctimas nacionales",value:"18.9 millones",desc:"Personas de 12 años y más usuarias de internet que experimentaron ciberacoso en 2024.",source:"INEGI · MOCIBA 2024"},
+ {title:"Ciberacoso: mujeres",value:"22.2%",desc:"Porcentaje estimado entre mujeres usuarias de internet en 2024.",source:"INEGI · MOCIBA 2024"}
+];
+const Q=[
+["Me doy tiempo para reconocer cómo me siento.","Ser consciente"],["Tengo hábitos que favorecen mi bienestar físico.","Cuidarme"],["Puedo identificar situaciones que podrían perjudicarme.","Identificar riesgos"],["Antes de decidir, pienso en las consecuencias.","Elegir"],["Sé con quién hablar cuando necesito apoyo.","Necesito apoyo"],["Tengo metas que orientan mis decisiones.","Alcanzar mi futuro"],
+["Puedo decir “no” ante una situación que no quiero.","Elegir"],["Protejo mi información y mis cuentas digitales.","Cuidarme"],["Cuando algo me preocupa, busco información confiable.","Ser consciente"],["Reconozco cuándo una situación necesita ayuda de una persona adulta.","Necesito apoyo"],["Evito normalizar conductas que pueden hacerme daño.","Identificar riesgos"],["Puedo convertir una preocupación en una acción concreta.","Alcanzar mi futuro"],
+["Cuido mi descanso y procuro mantener horarios saludables.","Cuidarme"],["Me detengo a pensar cuando otras personas me presionan.","Elegir"],["Distingo entre una opinión en internet y una fuente confiable.","Ser consciente"],["Sé que pedir ayuda no significa que haya fracasado.","Necesito apoyo"],
+["Puedo explicar por qué una conducta puede tener consecuencias.","Identificar riesgos"],["Tengo al menos una meta personal para los próximos meses.","Alcanzar mi futuro"],
+["Reviso mis decisiones cuando noto que algo no está funcionando.","Ser consciente"],["Procuro cuidar mi alimentación y actividad física.","Cuidarme"],["Reconozco señales de presión social en mi entorno.","Identificar riesgos"],["Puedo elegir alternativas saludables ante una situación difícil.","Elegir"],["Tengo personas de confianza a quienes puedo acudir.","Necesito apoyo"],["Relaciono mis decisiones actuales con mi proyecto de vida.","Alcanzar mi futuro"],
+["Antes de compartir contenido, pienso en sus consecuencias.","Elegir"],["Puedo establecer límites cuando algo me incomoda.","Cuidarme"],["Busco ayuda si una situación supera lo que puedo resolver solo.","Necesito apoyo"],["Compruebo datos antes de creer o compartir información.","Ser consciente"],["Reconozco que los problemas sociales tienen múltiples causas.","Identificar riesgos"],["Puedo definir un pequeño paso para acercarme a una meta.","Alcanzar mi futuro"],
+["Me trato con respeto incluso cuando cometo errores.","Cuidarme"],["Analizo alternativas antes de tomar una decisión importante.","Elegir"],["Puedo identificar recursos de apoyo disponibles en mi escuela.","Necesito apoyo"],["Me interesa aprender cómo cuidar mejor mi bienestar.","Ser consciente"],["Sé que un dato estadístico describe grupos y no determina mi destino.","Identificar riesgos"],["Puedo imaginar un futuro saludable y trabajar hacia él.","Alcanzar mi futuro"]
+];
+function nav(){const items=[["inicio","Inicio"],["datos","Datos que hablan"],["radar","Mi Radar"],["prepost","Pretest / Postest"],["acciones","¿Qué puedo hacer?"],["apoyo","Red de apoyo"],["impacto","Impacto"],["demo","Modo jurado"]];document.getElementById("nav").innerHTML=items.map(x=>`<button onclick="go('${x[0]}')">${x[1]}</button>`).join("")}
+function go(id){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));const b=[...document.querySelectorAll("nav button")].find(x=>x.getAttribute("onclick")?.includes("'"+id+"'"));if(b)b.classList.add("active");window.scrollTo({top:0,behavior:"smooth"});if(id==="datos")drawChart();if(id==="impacto")renderRecords()}
+function renderData(){document.getElementById("dataCards").innerHTML=DATA.map(d=>`<div class="card"><span class="tag">${d.source}</span><div class="kpi">${d.value}</div><h3>${d.title}</h3><p>${d.desc}</p></div>`).join("")}
+function drawChart(){const c=document.getElementById("cyberChart"),ctx=c.getContext("2d");ctx.clearRect(0,0,c.width,c.height);const vals=[20.9,21.0,20.3,24.2],labs=["México 2023","México 2024","Tlaxcala 2023","Tlaxcala 2024"];let w=100,h=210,base=255,max=30;ctx.font="14px Arial";vals.forEach((v,i)=>{let x=100+i*190;let bh=v/max*h;ctx.fillStyle=i%2?"#1d6fa5":"#20a4b8";ctx.fillRect(x,base-bh,w,bh);ctx.fillStyle="#173042";ctx.fillText(v+"%",x+20,base-bh-8);ctx.fillText(labs[i],x-10,base+24)});ctx.fillStyle="#637584";ctx.fillText("Porcentaje de usuarios de internet que experimentaron ciberacoso",55,35)}
+let answers={};function startRadar(){document.getElementById("consentBox").style.display="none";document.getElementById("radarBox").style.display="block";renderQuestions()}
+function renderQuestions(){document.getElementById("questions").innerHTML=Q.map((q,i)=>`<div class="question"><b>${i+1}. ${q[0]}</b><div class="small">${q[1]}</div><div class="opts">${[1,2,3,4,5].map(n=>`<label><input type="radio" name="q${i}" value="${n}" onchange="answers[${i}]=${n};progress()"> ${["Nunca","Casi nunca","A veces","Casi siempre","Siempre"][n-1]}</label>`).join("")}</div></div>`).join("")}
+function progress(){let n=Object.keys(answers).length;document.getElementById("pbar").style.width=(n/Q.length*100)+"%"}
+function finishRadar(){if(Object.keys(answers).length<Q.length){alert("Completa las 36 afirmaciones para obtener tu resultado educativo.");return}let total=Object.values(answers).reduce((a,b)=>a+b,0),score=Math.round((total/(Q.length*5))*100);let msg=score>=80?"Tienes varias fortalezas de autocuidado. Manténlas y sigue desarrollándolas.":score>=60?"Hay fortalezas importantes y también áreas que puedes reforzar. Elige una acción concreta.":"Este resultado sugiere que vale la pena dedicar atención a algunas áreas de autocuidado y buscar apoyo cuando lo necesites.";document.getElementById("resultBox").innerHTML=`<div class="result"><div class="small">Resultado educativo · no clínico</div><div class="score">${score}/100</div><p>${msg}</p><p><b>Recuerda:</b> un puntaje no define quién eres ni predice tu futuro. Sirve como punto de partida para reflexionar.</p><button class="btn" onclick="go('acciones')">Elegir una acción</button></div>`;localStorage.setItem("lastScore",score)}
+function savePhase(){const code=document.getElementById("code").value.trim();const phase=document.getElementById("phase").value;if(!code){alert("Escribe un código anónimo.");return}const score=localStorage.getItem("lastScore");if(!score){alert("Primero completa el Radar.");return}let r=JSON.parse(localStorage.getItem("records")||"[]");r.push({code,phase,date:new Date().toLocaleString("es-MX"),score:Number(score)});localStorage.setItem("records",JSON.stringify(r));document.getElementById("phaseMsg").innerHTML='<div class="alert safe">Registro guardado únicamente en este dispositivo.</div>';renderRecords()}
+function renderRecords(){let r=JSON.parse(localStorage.getItem("records")||"[]");document.getElementById("records").innerHTML=r.length?r.map(x=>`<tr><td>${x.code}</td><td>${x.phase==="pre"?"Pretest":"Postest"}</td><td>${x.date}</td><td>${x.score}</td></tr>`).join(""):"<tr><td colspan='4'>Sin registros locales.</td></tr>";let pre=r.filter(x=>x.phase==="pre").map(x=>x.score),post=r.filter(x=>x.phase==="post").map(x=>x.score);if(pre.length&&post.length){let a=pre.reduce((x,y)=>x+y,0)/pre.length,b=post.reduce((x,y)=>x+y,0)/post.length;document.getElementById("impactText").textContent=`Promedio local: pretest ${a.toFixed(1)} · postest ${b.toFixed(1)} · cambio ${((b-a)/a*100).toFixed(1)}%.`}else document.getElementById("impactText").textContent="Aún no hay suficientes registros locales para comparar pretest y postest."}
+function saveCommit(){localStorage.setItem("commit",document.getElementById("commit").value);document.getElementById("commitMsg").textContent=" Guardado en este dispositivo."}
+nav();renderData();go("inicio");
+</script>
+</body></html>
