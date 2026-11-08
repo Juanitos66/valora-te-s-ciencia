@@ -2,7 +2,8 @@
 -- Ejecutar en Supabase SQL Editor. Probar primero con registros ficticios.
 -- No publicar nunca una clave service_role en el frontend.
 
-create extension if not exists pgcrypto;
+create schema if not exists extensions;
+create extension if not exists pgcrypto with schema extensions;
 
 create table if not exists public.assessments (
   id uuid primary key default gen_random_uuid(),
@@ -44,7 +45,7 @@ create table if not exists private.sciencia_hash_secret (
 );
 revoke all on private.sciencia_hash_secret from public, anon, authenticated;
 insert into private.sciencia_hash_secret(id, secret)
-values (true, encode(gen_random_bytes(32), 'hex'))
+values (true, encode(extensions.gen_random_bytes(32), 'hex'))
 on conflict (id) do nothing;
 
 create or replace function public.submit_assessment(
@@ -83,7 +84,7 @@ begin
   from private.sciencia_hash_secret
   where id = true;
 
-  v_hash := encode(hmac(lower(trim(p_code)), v_secret, 'sha256'), 'hex');
+  v_hash := encode(extensions.hmac(lower(trim(p_code)), v_secret, 'sha256'), 'hex');
 
   insert into public.assessments(participant_hash, phase, group_code, score, dimensions)
   values (v_hash, p_phase, nullif(upper(trim(p_group)),''), p_score, p_dimensions);
