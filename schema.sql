@@ -104,7 +104,7 @@ do $ begin
   end if;
 end $;
 
--- El panel docente recibe únicamente indicadores agregados, nunca códigos,
+-- El panel docente recibe únicamente indicadores agregados de pares completos, nunca códigos,
 -- hashes, fechas individuales ni respuestas de cada estudiante.
 create or replace function public.get_assessment_summary()
 returns table (
@@ -123,12 +123,22 @@ begin
   end if;
 
   return query
-  with stats as (
+  with paired as (
     select
-      count(distinct participant_hash)::bigint as participants,
-      avg(score) filter (where phase = 'pre') as pre_avg,
-      avg(score) filter (where phase = 'post') as post_avg
+      participant_hash,
+      max(score) filter (where phase = 'pre') as pre_score,
+      max(score) filter (where phase = 'post') as post_score
     from public.assessments
+    group by participant_hash
+    having count(*) filter (where phase = 'pre') > 0
+       and count(*) filter (where phase = 'post') > 0
+  ),
+  stats as (
+    select
+      count(*)::bigint as participants,
+      avg(pre_score) as pre_avg,
+      avg(post_score) as post_avg
+    from paired
   )
   select
     participants,
