@@ -655,7 +655,7 @@ function exportCSV(){
  if(!Array.isArray(r)||!r.length){alert("No hay registros para exportar.");return}
  const headers=["codigo","grupo","fase","fecha","puntaje","ser_consciente","cuidarme","identificar_riesgos","elegir","necesito_apoyo","alcanzar_mi_futuro"];
  const rows=r.map(x=>[x.code,x.groupCode||"",x.phase,x.date,x.score,...DIMS.map(d=>x.dimensions?.[d]??"")]);
- const csv="\\uFEFF"+[headers,...rows].map(row=>row.map(csvCell).join(",")).join("\\r\\n");
+ const csv="\uFEFF"+[headers,...rows].map(row=>row.map(csvCell).join(",")).join("\r\n");
  const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
  const url=URL.createObjectURL(blob),a=document.createElement("a");
  a.href=url;a.download="valora-te-s-ciencia-registros.csv";
@@ -693,8 +693,8 @@ async function loadCloudDashboard(){
 function isSupabaseConfigured(){
  const url=String(window.SC_CONFIG?.SUPABASE_URL||"").trim();
  const key=String(window.SC_CONFIG?.SUPABASE_ANON_KEY||"").trim();
- return /^https:\\/\\/[^\\s]+\\.supabase\\.co\\/?$/i.test(url) &&
-   key.length>30 && !/PEGA_AQUI|YOUR_|PLACEHOLDER/i.test(key);
+ return url.startsWith("https://") && url.includes(".supabase.co") &&
+   !/PEGA_AQUI|YOUR_|PLACEHOLDER/i.test(url+" "+key) && key.length>30;
 }
 function showConfig(){
  const ok=isSupabaseConfigured();
