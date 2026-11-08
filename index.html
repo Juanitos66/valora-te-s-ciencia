@@ -576,7 +576,7 @@ function drawChart(){
  vals.forEach((v,i)=>{let x=75+i*205,bh=v/max*h;ctx.fillStyle=i%2?"#1d6fa5":"#20a4b8";ctx.fillRect(x,base-bh,w,bh);ctx.fillStyle="#173042";ctx.fillText(v+"%",x+38,base-bh-9);ctx.fillText(labs[i],x+4,base+25)});
  ctx.fillStyle="#637584";ctx.fillText("Porcentaje de usuarios que vivieron ciberacoso",75,35);
 }
-function startRadar(){answers={};document.getElementById("consentBox").style.display="none";document.getElementById("radarBox").classList.remove("hide");renderQuestions()}
+function startRadar(){answers={};document.getElementById("resultBox").innerHTML="";document.getElementById("pbar").style.width="0%";document.getElementById("consentBox").style.display="none";document.getElementById("radarBox").classList.remove("hide");renderQuestions();}
 function renderQuestions(){
  document.getElementById("questions").innerHTML=Q.map((q,i)=>`<div class="question"><b>${i+1}. ${q[0]}</b><div class="small">${q[1]}</div><div class="opts">${[1,2,3,4,5].map(n=>`<label><input type="radio" name="q${i}" value="${n}" onchange="answers[${i}]=${n};progress()"> ${["Nunca","Casi nunca","A veces","Casi siempre","Siempre"][n-1]}</label>`).join("")}</div></div>`).join("");
 }
@@ -600,24 +600,38 @@ function finishRadar(){
 function loadLast(){try{let r=JSON.parse(localStorage.getItem("lastAssessment"));if(r){lastAssessment=r;document.getElementById("lastScoreText").textContent=`Último puntaje generado: ${r.score}/100.`}}catch(e){}}
 function validCode(code){return /^[A-Za-z0-9]{2,12}$/.test(code)}
 async function savePhase(){
- const code=document.getElementById("code").value.trim(),phase=document.getElementById("phase").value,group=(document.getElementById("groupCode").value||"").trim();
+ const code=document.getElementById("code").value.trim().toUpperCase();
+ const phase=document.getElementById("phase").value;
+ const group=(document.getElementById("groupCode").value||"").trim().toUpperCase();
  if(!validCode(code)){alert("Usa un código anónimo de 2 a 12 caracteres, solo letras y números.");return}
- const r=lastAssessment||JSON.parse(localStorage.getItem("lastAssessment")||"null");
- if(!r){alert("Primero completa Mi Radar.");return}
+ if(group && !/^[A-Z0-9_-]{1,20}$/.test(group)){alert("El código de grupo debe contener únicamente letras, números, guion o guion bajo.");return}
+ let r=lastAssessment;
+ try{if(!r)r=JSON.parse(localStorage.getItem("lastAssessment")||"null")}catch(e){r=null}
+ if(!r || !Number.isInteger(r.score) || !r.dimensions){alert("Primero completa Mi Radar para generar un resultado válido.");return}
+ let local=[];
+ try{local=JSON.parse(localStorage.getItem("records")||"[]");if(!Array.isArray(local))local=[]}catch(e){local=[]}
+ if(local.some(x=>String(x.code).toUpperCase()===code && x.phase===phase)){
+  alert("Ya existe un registro local para este código y esta fase. No se guardó un duplicado.");return;
+ }
  const record={code,phase,groupCode:group,date:new Date().toISOString(),score:r.score,dimensions:r.dimensions};
- let local=JSON.parse(localStorage.getItem("records")||"[]");local.push(record);localStorage.setItem("records",JSON.stringify(local));
- let msg='<div class="alert safe">Registro guardado en este dispositivo.</div>';
- if(window.SC_CONFIG?.SUPABASE_URL && window.SC_CONFIG?.SUPABASE_ANON_KEY && window.supabase){
+ local.push(record);
+ try{localStorage.setItem("records",JSON.stringify(local))}
+ catch(e){alert("El navegador no permitió guardar el registro local. Revisa el almacenamiento disponible.");return}
+ let msg='<div class="alert safe">Registro guardado en este dispositivo. No se ha confirmado sincronización central.</div>';
+ if(isSupabaseConfigured() && window.supabase){
   try{
    const client=getSupabase();
-   if(client){
-    const {error}=await client.rpc("submit_assessment",{p_code:code,p_phase:phase,p_group:group||null,p_score:r.score,p_dimensions:r.dimensions});
-    if(error) throw error;
-    msg='<div class="alert safe"><b>Registro guardado localmente y sincronizado con la base central.</b></div>';
-   }
-  }catch(e){msg+='<div class="alert" style="margin-top:8px">La sincronización central no fue posible. El registro local permanece guardado.</div>';console.error(e)}
+   if(!client)throw new Error("No se pudo inicializar la conexión central.");
+   const {error}=await client.rpc("submit_assessment",{p_code:code,p_phase:phase,p_group:group||null,p_score:r.score,p_dimensions:r.dimensions});
+   if(error)throw error;
+   msg='<div class="alert safe"><b>Registro guardado localmente y sincronizado con la base central.</b></div>';
+  }catch(e){
+   msg+='<div class="alert" style="margin-top:8px">No se confirmó la sincronización central. El registro local permanece guardado. Si vuelves a intentarlo, verifica primero el panel docente para evitar duplicados.</div>';
+   console.error("Error de sincronización:",e);
+  }
  }
- document.getElementById("phaseMsg").innerHTML=msg;renderRecords();drawImpactChart();
+ document.getElementById("phaseMsg").innerHTML=msg;
+ renderRecords();drawImpactChart();
 }
 function renderRecords(){
  const r=JSON.parse(localStorage.getItem("records")||"[]");document.getElementById("nLocal").textContent=r.length;
@@ -636,10 +650,17 @@ function drawImpactChart(){
  vals.forEach((v,i)=>{let x=190+i*310,bh=v/max*h;ctx.fillStyle=i?"#1d6fa5":"#20a4b8";ctx.fillRect(x,base-bh,w,bh);ctx.fillStyle="#173042";ctx.fillText(v.toFixed(1),x+70,base-bh-10);ctx.fillText(labs[i],x+62,base+25)});
 }
 function exportCSV(){
- let r=JSON.parse(localStorage.getItem("records")||"[]");if(!r.length){alert("No hay registros para exportar.");return}
- let csv="codigo,fase,fecha,puntaje,ser_consciente,cuidarme,identificar_riesgos,elegir,necesito_apoyo,alcanzar_mi_futuro\\n";
- csv+=r.map(x=>[x.code,x.phase,x.date,x.score,...DIMS.map(d=>x.dimensions?.[d]??"")].map(csvCell).join(",")).join("\\n");
- let blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="valórate_s_ciencia_registros.csv";a.click();URL.revokeObjectURL(a.href);
+ let r=[];
+ try{r=JSON.parse(localStorage.getItem("records")||"[]")}catch(e){r=[]}
+ if(!Array.isArray(r)||!r.length){alert("No hay registros para exportar.");return}
+ const headers=["codigo","grupo","fase","fecha","puntaje","ser_consciente","cuidarme","identificar_riesgos","elegir","necesito_apoyo","alcanzar_mi_futuro"];
+ const rows=r.map(x=>[x.code,x.groupCode||"",x.phase,x.date,x.score,...DIMS.map(d=>x.dimensions?.[d]??"")]);
+ const csv="\\uFEFF"+[headers,...rows].map(row=>row.map(csvCell).join(",")).join("\\r\\n");
+ const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="valora-te-s-ciencia-registros.csv";
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 function clearRecords(){if(confirm("¿Borrar todos los registros locales de este dispositivo?")){localStorage.removeItem("records");renderRecords();drawImpactChart()}}
 function saveCommit(){localStorage.setItem("commit",document.getElementById("commit").value);document.getElementById("commitMsg").textContent=" Guardado en este dispositivo."}
@@ -648,7 +669,7 @@ function caseAnswer(n,a){const ok=(n===1&&a==="B")||(n===2&&a==="B")||(n===3&&a=
 function avg(a){return a.length?a.reduce((x,y)=>x+y,0)/a.length:null}
 function csvCell(v){return '"'+String(v??"").replaceAll('"','""')+'"'}
 function escapeHtml(v){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
-function getSupabase(){if(!window.SC_CONFIG?.SUPABASE_URL||!window.SC_CONFIG?.SUPABASE_ANON_KEY||!window.supabase)return null;return window.supabase.createClient(window.SC_CONFIG.SUPABASE_URL,window.SC_CONFIG.SUPABASE_ANON_KEY)}
+function getSupabase(){if(!isSupabaseConfigured()||!window.supabase)return null;return window.supabase.createClient(window.SC_CONFIG.SUPABASE_URL.trim(),window.SC_CONFIG.SUPABASE_ANON_KEY.trim())}
 async function teacherLogin(){
  const c=getSupabase();if(!c){document.getElementById("authMsg").textContent="Supabase no está configurado.";return}
  const email=document.getElementById("teacherEmail").value.trim(),password=document.getElementById("teacherPassword").value;
@@ -657,21 +678,32 @@ async function teacherLogin(){
 async function teacherLogout(){const c=getSupabase();if(c)await c.auth.signOut();document.getElementById("cloudDashboard").classList.add("hide");document.getElementById("authMsg").textContent="Sesión cerrada."}
 async function checkAuth(){const c=getSupabase();if(!c)return;const {data}=await c.auth.getSession();if(data?.session){document.getElementById("cloudDashboard").classList.remove("hide");loadCloudDashboard()}}
 async function loadCloudDashboard(){
- const c=getSupabase();if(!c){alert("Configura Supabase primero.");return}
- const {data,error}=await c.from("assessment_summary").select("*").order("phase");
- if(error){document.getElementById("authMsg").textContent="No se pudo cargar el panel: "+error.message;return}
- const pre=data.filter(x=>x.phase==="pre").map(x=>Number(x.score)),post=data.filter(x=>x.phase==="post").map(x=>Number(x.score));
- const a=avg(pre),b=avg(post),ch=(a&&b)?(b-a)/a*100:null;
- document.getElementById("cloudN").textContent=data.length;document.getElementById("cloudPre").textContent=a==null?"—":a.toFixed(1);document.getElementById("cloudPost").textContent=b==null?"—":b.toFixed(1);document.getElementById("cloudChange").textContent=ch==null?"—":ch.toFixed(1)+"%";
- document.getElementById("cloudUpdated").textContent="Actualizado: "+new Date().toLocaleString("es-MX");
+ const c=getSupabase();
+ if(!c){document.getElementById("authMsg").textContent="Configura Supabase primero.";return}
+ const {data,error}=await c.rpc("get_assessment_summary");
+ if(error){document.getElementById("authMsg").textContent="No se pudo cargar el resumen agregado: "+error.message;return}
+ const s=Array.isArray(data)?data[0]:data;
+ if(!s){document.getElementById("authMsg").textContent="La base central no devolvió indicadores.";return}
+ document.getElementById("cloudN").textContent=Number(s.participant_count||0);
+ document.getElementById("cloudPre").textContent=s.pre_average==null?"—":Number(s.pre_average).toFixed(1);
+ document.getElementById("cloudPost").textContent=s.post_average==null?"—":Number(s.post_average).toFixed(1);
+ document.getElementById("cloudChange").textContent=s.relative_change==null?"—":Number(s.relative_change).toFixed(1)+"%";
+ document.getElementById("cloudUpdated").textContent="Resumen agregado actualizado: "+new Date().toLocaleString("es-MX");
+}
+function isSupabaseConfigured(){
+ const url=String(window.SC_CONFIG?.SUPABASE_URL||"").trim();
+ const key=String(window.SC_CONFIG?.SUPABASE_ANON_KEY||"").trim();
+ return /^https:\\/\\/[^\\s]+\\.supabase\\.co\\/?$/i.test(url) &&
+   key.length>30 && !/PEGA_AQUI|YOUR_|PLACEHOLDER/i.test(key);
 }
 function showConfig(){
- const ok=!!(window.SC_CONFIG?.SUPABASE_URL&&window.SC_CONFIG?.SUPABASE_ANON_KEY&&window.SC_CONFIG.SUPABASE_URL!=="PEGA_AQUI_TU_URL");
+ const ok=isSupabaseConfigured();
  document.getElementById("configState").innerHTML=ok?'<span class="badge">Configuración central detectada</span>':'<span class="badge warn">Modo local: falta configurar Supabase</span>';
- document.getElementById("cloudStatus").textContent=ok?"Configurado":"No configurado";document.getElementById("cloudStatus").className=ok?"badge":"badge warn";
+ document.getElementById("cloudStatus").textContent=ok?"Configurado":"No configurado";
+ document.getElementById("cloudStatus").className=ok?"badge":"badge warn";
 }
 nav();renderData();loadLast();loadCommit();renderRecords();showConfig();
-if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(reg=>reg.update()).catch(()=>{});
 </script>
 </body>
 </html>
