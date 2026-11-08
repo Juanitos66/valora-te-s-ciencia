@@ -15,7 +15,8 @@ La versión 4.0 conserva el modo demostración/local de las versiones anteriores
 - Registro local automático.
 - Exportación CSV.
 - Sincronización opcional con Supabase.
-- Seudonimización del código mediante HMAC con secreto conservado en la base de datos.\n- Panel docente con una función RPC que devuelve exclusivamente indicadores agregados; no expone filas individuales.
+- Seudonimización del código mediante HMAC con secreto conservado en la base de datos.
+- Panel docente con una función RPC que devuelve exclusivamente indicadores agregados; no expone filas individuales.
 - Panel docente autenticado.
 - Indicadores agregados: participantes, promedio pre, promedio post y cambio relativo.
 - Casos interactivos de toma de decisiones.
@@ -50,7 +51,9 @@ Sin configurar nada, `index.html` funciona y guarda los resultados en el navegad
 7. No uses `service_role`.
 8. Sube `index.html`, `config.js`, `manifest.json`, `sw.js` e `icon.svg` a GitHub Pages.
 9. Entra a Impacto → Panel docente e inicia sesión.
-10. Prueba primero con códigos y datos ficticios.\n\nEl panel central usa `get_assessment_summary()` y requiere una sesión docente autenticada. El código de participante debe ser aleatorio y mantenerse bajo resguardo del responsable; el HMAC es seudonimización, no anonimato absoluto.
+10. Prueba primero con códigos y datos ficticios.
+
+El panel central usa `get_assessment_summary()` y requiere una sesión docente autenticada. Los promedios pre/post se calculan únicamente con participantes que tienen ambas mediciones. El código de participante debe ser aleatorio y mantenerse bajo resguardo del responsable; el HMAC es seudonimización, no anonimato absoluto.
 
 ## Recomendación para investigación
 Mantener separados:
