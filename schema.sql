@@ -98,11 +98,13 @@ revoke all on function public.submit_assessment(text,text,text,integer,jsonb) fr
 grant execute on function public.submit_assessment(text,text,text,integer,jsonb) to anon, authenticated;
 
 -- Se revoca la vista anterior porque exponía filas individuales y no agregados.
-do $ begin
+do $revoke$
+begin
   if to_regclass('public.assessment_summary') is not null then
     execute 'revoke all on public.assessment_summary from anon, authenticated';
   end if;
-end $;
+end
+$revoke$;
 
 -- El panel docente recibe únicamente indicadores agregados de pares completos, nunca códigos,
 -- hashes, fechas individuales ni respuestas de cada estudiante.
