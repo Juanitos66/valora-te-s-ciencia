@@ -45,7 +45,7 @@ create table if not exists private.sciencia_hash_secret (
 );
 revoke all on private.sciencia_hash_secret from public, anon, authenticated;
 insert into private.sciencia_hash_secret(id, secret)
-values (true, encode(extensions.gen_random_bytes(32), 'hex'))
+values (true, gen_random_uuid()::text)
 on conflict (id) do nothing;
 
 create or replace function public.submit_assessment(
@@ -58,7 +58,7 @@ create or replace function public.submit_assessment(
 returns void
 language plpgsql
 security definer
-set search_path = public, private, pg_temp
+set search_path = public, private, extensions, pg_temp
 as $$
 declare
   v_hash text;
@@ -84,7 +84,7 @@ begin
   from private.sciencia_hash_secret
   where id = true;
 
-  v_hash := encode(extensions.hmac(lower(trim(p_code)), v_secret, 'sha256'), 'hex');
+  v_hash := encode(hmac(lower(trim(p_code)), v_secret, 'sha256'), 'hex');
 
   insert into public.assessments(participant_hash, phase, group_code, score, dimensions)
   values (v_hash, p_phase, nullif(upper(trim(p_group)),''), p_score, p_dimensions);
