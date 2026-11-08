@@ -458,7 +458,7 @@ select:focus-visible {
   </div>
   <div id="cloudDashboard" class="hide" style="margin-top:18px">
    <div class="grid">
-    <div class="card"><h3>Participantes centrales</h3><div id="cloudN" class="kpi">—</div></div>
+    <div class="card"><h3>Pares pre/post completos</h3><div id="cloudN" class="kpi">—</div></div>
     <div class="card"><h3>Pretest central</h3><div id="cloudPre" class="kpi">—</div></div>
     <div class="card"><h3>Postest central</h3><div id="cloudPost" class="kpi">—</div></div>
     <div class="card"><h3>Cambio central</h3><div id="cloudChange" class="kpi">—</div></div>
@@ -633,20 +633,43 @@ async function savePhase(){
  document.getElementById("phaseMsg").innerHTML=msg;
  renderRecords();drawImpactChart();
 }
+function pairedRecords(records){
+ const grouped=new Map();
+ records.forEach(x=>{
+  const code=String(x.code||"").toUpperCase();
+  if(!code)return;
+  const item=grouped.get(code)||{};
+  if(x.phase==="pre")item.pre=Number(x.score);
+  if(x.phase==="post")item.post=Number(x.score);
+  grouped.set(code,item);
+ });
+ return [...grouped.entries()]
+  .filter(([,x])=>Number.isFinite(x.pre)&&Number.isFinite(x.post))
+  .map(([code,x])=>({code,pre:x.pre,post:x.post}));
+}
 function renderRecords(){
- const r=JSON.parse(localStorage.getItem("records")||"[]");document.getElementById("nLocal").textContent=r.length;
+ let r=[];
+ try{r=JSON.parse(localStorage.getItem("records")||"[]")}catch(e){r=[]}
+ if(!Array.isArray(r))r=[];
+ document.getElementById("nLocal").textContent=new Set(r.map(x=>String(x.code||"").toUpperCase()).filter(Boolean)).size;
  document.getElementById("records").innerHTML=r.length?r.slice().reverse().map(x=>`<tr><td>${escapeHtml(x.code)}</td><td>${x.phase==="pre"?"Pretest":"Postest"}</td><td>${new Date(x.date).toLocaleString("es-MX")}</td><td>${x.score}</td></tr>`).join(""):"<tr><td colspan='4'>Sin registros locales.</td></tr>";
- let pre=r.filter(x=>x.phase==="pre").map(x=>x.score),post=r.filter(x=>x.phase==="post").map(x=>x.score);
- const a=avg(pre),b=avg(post);document.getElementById("preAvg").textContent=a==null?"—":a.toFixed(1);document.getElementById("postAvg").textContent=b==null?"—":b.toFixed(1);
- const ch=(a!=null&&b!=null&&a!==0)?(b-a)/a*100:null;document.getElementById("changeAvg").textContent=ch==null?"—":ch.toFixed(1)+"%";
- document.getElementById("impactText").textContent=ch==null?"Se necesitan registros de pretest y postest para calcular el cambio.":`Promedios locales: pretest ${a.toFixed(1)} · postest ${b.toFixed(1)} · cambio relativo ${ch.toFixed(1)}%.`;
+ const pairs=pairedRecords(r),a=avg(pairs.map(x=>x.pre)),b=avg(pairs.map(x=>x.post));
+ document.getElementById("preAvg").textContent=a==null?"—":a.toFixed(1);
+ document.getElementById("postAvg").textContent=b==null?"—":b.toFixed(1);
+ const ch=(a!=null&&b!=null&&a!==0)?(b-a)/a*100:null;
+ document.getElementById("changeAvg").textContent=ch==null?"—":ch.toFixed(1)+"%";
+ document.getElementById("impactText").textContent=ch==null
+  ?"Se necesitan códigos con pretest y postest completos para calcular el cambio."
+  :`Comparación de ${pairs.length} pares completos: pretest ${a.toFixed(1)} · postest ${b.toFixed(1)} · cambio relativo ${ch.toFixed(1)}%.`;
 }
 function drawImpactChart(){
  const c=document.getElementById("impactChart"),ctx=c.getContext("2d");ctx.clearRect(0,0,c.width,c.height);
- const r=JSON.parse(localStorage.getItem("records")||"[]"),a=avg(r.filter(x=>x.phase==="pre").map(x=>x.score)),b=avg(r.filter(x=>x.phase==="post").map(x=>x.score));
- ctx.font="15px Arial";ctx.fillStyle="#637584";ctx.fillText("Promedio educativo (0–100)",70,35);
- if(a==null&&b==null){ctx.fillText("Sin datos suficientes",70,170);return}
- const vals=[a||0,b||0],labs=["Pretest","Postest"],base=275,max=100,h=200,w=190;
+ let r=[];try{r=JSON.parse(localStorage.getItem("records")||"[]")}catch(e){}
+ const pairs=pairedRecords(Array.isArray(r)?r:[]);
+ const a=avg(pairs.map(x=>x.pre)),b=avg(pairs.map(x=>x.post));
+ ctx.font="15px Arial";ctx.fillStyle="#637584";ctx.fillText("Promedio de pares completos (0–100)",70,35);
+ if(a==null||b==null){ctx.fillText("Sin pares pretest/postest completos",70,170);return}
+ const vals=[a,b],labs=["Pretest","Postest"],base=275,max=100,h=200,w=190;
  vals.forEach((v,i)=>{let x=190+i*310,bh=v/max*h;ctx.fillStyle=i?"#1d6fa5":"#20a4b8";ctx.fillRect(x,base-bh,w,bh);ctx.fillStyle="#173042";ctx.fillText(v.toFixed(1),x+70,base-bh-10);ctx.fillText(labs[i],x+62,base+25)});
 }
 function exportCSV(){
