@@ -1,0 +1,124 @@
+<!-- Módulo ABC de las emociones · Valórate con S-Ciencia -->
+<section id="emociones" class="view">
+ <div class="abc-hero">
+  <span class="abc-kicker">VALÓRATE CON S-CIENCIA · BIENESTAR SOCIOEMOCIONAL</span>
+  <h2>El ABC de las emociones</h2>
+  <p>Reconocer lo que sientes también es una forma de cuidarte. Explora, expresa, escucha y construye relaciones basadas en el respeto.</p>
+  <div class="abc-actions">
+   <button class="btn" onclick="abcShow('abc-mapa')">💛 Explorar mis emociones</button>
+   <button class="btn alt" onclick="abcShow('abc-actividades')">🎯 Actividades ABC</button>
+   <button class="btn alt" onclick="abcShow('abc-apoyo')">🤝 Mi red de apoyo</button>
+  </div>
+  <p class="abc-note">Sentir no está bien ni mal: todas las emociones nos dan información. Lo importante es reconocerlas y elegir cómo responder.</p>
+ </div>
+
+ <div class="abc-tabs" role="tablist" aria-label="Secciones del ABC de las emociones">
+  <button class="abc-tab active" data-abc-tab="abc-mapa" onclick="abcShow('abc-mapa')">💛 Mi mapa emocional</button>
+  <button class="abc-tab" data-abc-tab="abc-actividades" onclick="abcShow('abc-actividades')">🎯 20 actividades</button>
+  <button class="abc-tab" data-abc-tab="abc-pausa" onclick="abcShow('abc-pausa')">🌿 Pausa y regulación</button>
+  <button class="abc-tab" data-abc-tab="abc-apoyo" onclick="abcShow('abc-apoyo')">🤝 Red de apoyo</button>
+  <button class="abc-tab" data-abc-tab="abc-familia" onclick="abcShow('abc-familia')">🏡 Familia y escuela</button>
+ </div>
+
+ <div id="abc-mapa" class="abc-panel active">
+  <div class="abc-section-head"><span class="abc-kicker">01 · AUTOCONOCIMIENTO</span><h3>¿Qué emoción me acompaña hoy?</h3><p>Elige la emoción que más se acerca a lo que sientes. Puedes elegir otra palabra si ninguna te representa.</p></div>
+  <div class="abc-emotion-grid" id="abcEmotionGrid">
+   <button class="abc-emotion" data-emotion="Alegría" onclick="abcPickEmotion(this)">😊<b>Alegría</b><small>Energía, entusiasmo, bienestar</small></button>
+   <button class="abc-emotion" data-emotion="Tristeza" onclick="abcPickEmotion(this)">😢<b>Tristeza</b><small>Pérdida, desánimo, necesidad de consuelo</small></button>
+   <button class="abc-emotion" data-emotion="Enojo" onclick="abcPickEmotion(this)">😠<b>Enojo</b><small>Molestia, frustración, límite</small></button>
+   <button class="abc-emotion" data-emotion="Miedo" onclick="abcPickEmotion(this)">😨<b>Miedo</b><small>Alerta, incertidumbre, protección</small></button>
+   <button class="abc-emotion" data-emotion="Sorpresa" onclick="abcPickEmotion(this)">😲<b>Sorpresa</b><small>Asombro, cambio, novedad</small></button>
+   <button class="abc-emotion" data-emotion="Calma" onclick="abcPickEmotion(this)">😌<b>Calma</b><small>Tranquilidad, equilibrio, descanso</small></button>
+   <button class="abc-emotion" data-emotion="Frustración" onclick="abcPickEmotion(this)">😣<b>Frustración</b><small>Obstáculo, dificultad, expectativa</small></button>
+   <button class="abc-emotion" data-emotion="Preocupación" onclick="abcPickEmotion(this)">😟<b>Preocupación</b><small>Duda, anticipación, inquietud</small></button>
+   <button class="abc-emotion" data-emotion="Gratitud" onclick="abcPickEmotion(this)">💚<b>Gratitud</b><small>Aprecio, reconocimiento, conexión</small></button>
+  </div>
+  <div class="abc-card abc-reflection">
+   <div class="abc-form-grid">
+    <label>La emoción que identifico<input id="abcChosen" placeholder="Selecciona una emoción o escríbela"></label>
+    <label>¿Qué intensidad tiene ahora? <output id="abcIntensityValue">3 de 5</output><input id="abcIntensity" type="range" min="1" max="5" value="3" oninput="document.getElementById('abcIntensityValue').textContent=this.value+' de 5'"></label>
+   </div>
+   <label>¿Qué pudo influir en cómo me siento? <textarea id="abcTrigger" rows="2" placeholder="Puedes escribir una situación, pensamiento o necesidad. No incluyas datos personales."></textarea></label>
+   <label>¿Qué necesito en este momento? <textarea id="abcNeed" rows="2" placeholder="Ej. descansar, hablar, poner un límite, tomar agua, pedir orientación..."></textarea></label>
+   <button class="btn" onclick="abcSaveMood()">Guardar reflexión en este dispositivo</button>
+   <p id="abcMoodMsg" class="abc-feedback" aria-live="polite">Tu reflexión es privada y se guarda únicamente en este navegador.</p>
+  </div>
+  <div class="abc-tip"><b>Recuerda:</b> una misma situación puede despertar emociones distintas en cada persona. No tienes que justificar lo que sientes ni compartirlo si no quieres.</div>
+ </div>
+
+ <div id="abc-actividades" class="abc-panel">
+  <div class="abc-section-head"><span class="abc-kicker">02 · APRENDIZAJE COLECTIVO</span><h3>20 actividades para aprender a sentir, escuchar y convivir</h3><p>Selecciona un botón para consultar el propósito, materiales y una ruta breve de aplicación. Las dinámicas están pensadas para realizarse con participación voluntaria, respeto y escucha sin juicios.</p></div>
+  <div class="abc-filter">
+   <input id="abcSearch" placeholder="Buscar una actividad..." oninput="abcRenderActivities()" aria-label="Buscar actividad">
+   <select id="abcCategory" onchange="abcRenderActivities()" aria-label="Filtrar actividades"><option value="todas">Todas las actividades</option><option value="autoconocimiento">Autoconocimiento</option><option value="expresión">Expresión emocional</option><option value="convivencia">Empatía y convivencia</option><option value="apoyo">Apoyo y colaboración</option><option value="autorregulación">Autorregulación</option></select>
+  </div>
+  <div class="abc-activity-grid" id="abcActivityGrid"></div>
+  <div id="abcActivityDetail" class="abc-card abc-detail" aria-live="polite"><p>Elige cualquiera de las 20 actividades para ver sus orientaciones.</p></div>
+  <p class="abc-source">Base pedagógica: <i>Actividades colectivas del ABC de las emociones</i>, guía compartida en esta conversación, pp. 4–23. Las fichas digitales son síntesis para consulta y no sustituyen la guía completa.</p>
+ </div>
+
+ <div id="abc-pausa" class="abc-panel">
+  <div class="abc-section-head"><span class="abc-kicker">03 · AUTORREGULACIÓN</span><h3>Una pausa para responder, no reaccionar</h3><p>Cuando una emoción se vuelve intensa, puedes darte un momento para reconocerla y elegir un siguiente paso seguro.</p></div>
+  <div class="abc-step-grid">
+   <div class="abc-step"><strong>1</strong><h4>Me detengo</h4><p>Si es posible, hago una pausa breve y busco un lugar donde me sienta seguro.</p></div>
+   <div class="abc-step"><strong>2</strong><h4>Respiro y observo</h4><p>Inhalo con suavidad y exhalo lentamente. Observo qué noto en mi cuerpo, sin juzgarme.</p></div>
+   <div class="abc-step"><strong>3</strong><h4>Pongo nombre</h4><p>Completo: “Ahora mismo siento… y quizá necesito…”.</p></div>
+   <div class="abc-step"><strong>4</strong><h4>Elijo un paso</h4><p>Puedo conversar, tomar distancia, moverme, descansar o pedir acompañamiento.</p></div>
+  </div>
+  <div class="abc-card">
+   <h4>Mi microacción para hoy</h4>
+   <p>Elige una acción pequeña, realista y amable contigo.</p>
+   <div class="abc-choice-list">
+    <label><input type="radio" name="abcMicro" value="Tomar agua y hacer una pausa"> Tomar agua y hacer una pausa</label>
+    <label><input type="radio" name="abcMicro" value="Caminar o estirarme unos minutos"> Caminar o estirarme unos minutos</label>
+    <label><input type="radio" name="abcMicro" value="Escuchar una canción que me calme"> Escuchar una canción que me calme</label>
+    <label><input type="radio" name="abcMicro" value="Hablar con alguien de confianza"> Hablar con alguien de confianza</label>
+    <label><input type="radio" name="abcMicro" value="Organizar una tarea en un paso pequeño"> Organizar una tarea en un paso pequeño</label>
+   </div>
+   <button class="btn" onclick="abcSaveMicro()">Guardar mi microacción</button><p id="abcMicroMsg" class="abc-feedback" aria-live="polite"></p>
+  </div>
+  <div class="abc-tip"><b>Importante:</b> respirar o hacer una pausa puede ayudar, pero no resuelve por sí solo todas las situaciones. Si algo te rebasa o te pone en peligro, busca apoyo humano oportunamente.</div>
+ </div>
+
+ <div id="abc-apoyo" class="abc-panel">
+  <div class="abc-section-head"><span class="abc-kicker">04 · CUIDADO COMPARTIDO</span><h3>No tengo que resolverlo todo a solas</h3><p>Identificar personas y espacios de confianza ayuda a saber a quién acercarte cuando necesitas orientación o acompañamiento.</p></div>
+  <div class="abc-support-grid">
+   <div class="abc-card"><span class="abc-icon">🏡</span><h4>Hogar</h4><p>Madre, padre, persona cuidadora o familiar con quien puedas conversar.</p></div>
+   <div class="abc-card"><span class="abc-icon">🏫</span><h4>Escuela</h4><p>Docente, tutor, orientación educativa o autoridad escolar de confianza.</p></div>
+   <div class="abc-card"><span class="abc-icon">🌎</span><h4>Comunidad</h4><p>Persona adulta responsable, servicio de salud o institución de apoyo.</p></div>
+  </div>
+  <div class="abc-card">
+   <h4>Mi árbol de emociones y apoyos</h4>
+   <p>Completa este ejercicio para reconocer tus recursos. Puedes usar palabras generales; no necesitas escribir nombres.</p>
+   <label>Mis raíces: personas, lugares o experiencias que me sostienen<textarea id="abcRoots" rows="2" placeholder="Ej. mi familia, una amistad, mi equipo, una actividad..."></textarea></label>
+   <label>Mi tronco: fortalezas y cualidades que reconozco en mí<textarea id="abcStrengths" rows="2" placeholder="Ej. soy perseverante, sé escuchar, puedo pedir ayuda..."></textarea></label>
+   <label>Mis ramas: emociones o situaciones que quiero aprender a atender<textarea id="abcBranches" rows="2" placeholder="Ej. nervios antes de un examen, enojo ante una injusticia..."></textarea></label>
+   <button class="btn" onclick="abcSaveTree()">Guardar mi árbol en este dispositivo</button><p id="abcTreeMsg" class="abc-feedback" aria-live="polite"></p>
+  </div>
+  <div class="abc-tip abc-alert"><b>Si existe peligro inmediato:</b> busca ayuda presencial de una persona adulta responsable y contacta los servicios de emergencia de tu localidad. Si una situación difícil persiste o afecta tu vida cotidiana, solicita orientación profesional. Esta plataforma es educativa y no brinda atención de emergencia ni diagnóstico.</div>
+ </div>
+
+ <div id="abc-familia" class="abc-panel">
+  <div class="abc-section-head"><span class="abc-kicker">05 · HOGAR, ESCUELA Y COMUNIDAD</span><h3>A acompañar también se aprende</h3><p>El bienestar de las y los jóvenes se construye con corresponsabilidad, diálogo horizontal y acciones de cuidado.</p></div>
+  <div class="abc-step-grid">
+   <div class="abc-step"><strong>01</strong><h4>Dedica tiempo</h4><p>Busca momentos cotidianos para conversar sin prisas.</p></div>
+   <div class="abc-step"><strong>02</strong><h4>Pregunta con interés</h4><p>Además de “¿cómo te fue?”, pregunta “¿qué fue lo mejor o lo más difícil de tu día?”.</p></div>
+   <div class="abc-step"><strong>03</strong><h4>Escucha sin interrumpir</h4><p>Reconoce lo que la otra persona siente sin minimizar ni juzgar.</p></div>
+   <div class="abc-step"><strong>04</strong><h4>Reconoce esfuerzos</h4><p>Valora avances, intentos y decisiones de autocuidado.</p></div>
+   <div class="abc-step"><strong>05</strong><h4>Establece límites con respeto</h4><p>Construyan acuerdos claros sobre convivencia, privacidad y uso de celulares.</p></div>
+  </div>
+  <div class="abc-card">
+   <h4>Transforma una frase en una expresión de cuidado</h4>
+   <p>Selecciona una frase que conviene cambiar.</p>
+   <select id="abcPhrase" onchange="abcTransformPhrase()"><option value="No llores">“No llores”</option><option value="No es para tanto">“No es para tanto”</option><option value="Resuelve tus problemas solo">“Resuelve tus problemas solo”</option><option value="Tienes que estar bien">“Tienes que estar bien”</option></select>
+   <div id="abcPhraseResult" class="abc-phrase-result">“Está bien sentirlo. Si quieres, puedo escucharte”.</div>
+   <button class="btn alt" onclick="abcCopyPhrase()">Copiar frase de cuidado</button>
+  </div>
+  <div class="abc-card">
+   <h4>Mi compromiso de cuidado</h4>
+   <textarea id="abcCommitment" rows="3" placeholder="Esta semana me comprometo a..."></textarea>
+   <button class="btn" onclick="abcSaveCommitment()">Guardar compromiso</button><p id="abcCommitMsg" class="abc-feedback" aria-live="polite"></p>
+  </div>
+  <p class="abc-source">Enfoque complementario basado en los materiales de Asamblea ABC para madres, padres y personas cuidadoras, ciclo 2026–2027: convivencia pacífica, acompañamiento familiar, escucha activa y acuerdos compartidos.</p>
+ </div>
+</section>
