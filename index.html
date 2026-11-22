@@ -414,6 +414,12 @@ select:focus-visible {
 @media(max-width:650px){.help-grid,.help-contact,.help-two{grid-template-columns:1fr}.help-contact p{min-height:0}.help-tab{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.help-panel{animation:none}}
 
+
+/* APP INSTALABLE · acceso web y móvil desde un solo sitio */
+.app-install{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px clamp(14px,4vw,42px);background:linear-gradient(90deg,#e9fbf7,#eef5ff);border-bottom:1px solid #d8e8ee;color:#173b5c}
+.app-install p{margin:0;font-size:13px}.app-install strong{display:block;font-size:14px}.app-install-actions{display:flex;gap:8px;flex-wrap:wrap}.app-install .btn{white-space:nowrap}.app-install[hidden]{display:none!important}
+@media(max-width:620px){.app-install{align-items:flex-start;flex-direction:column}.app-install-actions{width:100%}.app-install-actions .btn{flex:1}}
+
 </style>
 </head>
 <body>
@@ -424,6 +430,10 @@ select:focus-visible {
  </div>
  <nav id="nav"></nav>
 </header>
+<div class="app-install" id="appInstallBar">
+ <p><strong>📲 Lleva Valórate con S-Ciencia contigo</strong>Entra desde la web o instala la app en tu dispositivo. Es gratuita.</p>
+ <div class="app-install-actions"><button class="btn" id="installAppBtn" type="button">Instalar aplicación</button><button class="btn alt" id="installHelpBtn" type="button">¿Cómo instalar?</button></div>
+</div>
 
 <main>
 <section id="inicio" class="view active">
@@ -1193,6 +1203,7 @@ if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js",{update
 <script src="v5.js"></script>
 <script src="jurado.js"></script>
 <script src="ayuda.js"></script>
+<script src="app-install.js"></script>
 </body>
 </html>
 
