@@ -1,13 +1,10 @@
-const CACHE = "s-ciencia-5-2-ayuda-v1";
-const CORE = ["./", "./index.html", "./config.js", "./manifest.json", "./icon.svg", "./abc-emociones.js", "./v5.js", "./jurado.js", "./ayuda.js"];
-
+const CACHE = "s-ciencia-app-5-3-v1";
+const CORE = ["./", "./index.html", "./config.js", "./manifest.json", "./icon.svg", "./app-install.js", "./abc-emociones.js", "./v5.js", "./jurado.js", "./ayuda.js"];
 self.addEventListener("install", event => {
  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting()));
 });
 self.addEventListener("activate", event => {
- event.waitUntil(caches.keys().then(keys => Promise.all(
-  keys.filter(key => key.startsWith("s-ciencia-") && key !== CACHE).map(key => caches.delete(key))
- )).then(() => self.clients.claim()));
+ event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith("s-ciencia-") && key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim()));
 });
 self.addEventListener("fetch", event => {
  const request=event.request;
@@ -15,7 +12,7 @@ self.addEventListener("fetch", event => {
  const url=new URL(request.url);
  if(url.origin!==self.location.origin)return;
  event.respondWith(fetch(request).then(response=>{
-  if(response&&response.ok){const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(request,copy))}
+  if(response&&response.ok){const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(request,copy));}
   return response;
  }).catch(()=>caches.match(request).then(cached=>cached||(request.mode==="navigate"?caches.match("./index.html"):Response.error()))));
 });
