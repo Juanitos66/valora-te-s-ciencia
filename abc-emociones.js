@@ -31,3 +31,58 @@ function abcSaveTree(){const v={roots:document.getElementById("abcRoots").value,
 function abcTransformPhrase(){const map={"No llores":"Está bien sentirlo. Si quieres, puedo escucharte.","No es para tanto":"Quiero entender qué significa esto para ti. Cuéntame si te hace bien hablarlo.","Resuelve tus problemas solo":"No tienes que resolverlo todo a solas. Podemos buscar apoyo.","Tienes que estar bien":"No tienes que fingir cómo te sientes. Estoy aquí para escucharte."};document.getElementById("abcPhraseResult").textContent="“"+map[document.getElementById("abcPhrase").value]+"”"}
 function abcCopyPhrase(){const t=document.getElementById("abcPhraseResult").textContent;if(navigator.clipboard?.writeText)navigator.clipboard.writeText(t).then(()=>alert("Frase copiada.")).catch(()=>alert(t));else alert(t)}
 function abcSaveCommitment(){const v=document.getElementById("abcCommitment").value.trim(),el=document.getElementById("abcCommitMsg");if(!v){el.textContent="Escribe un compromiso breve.";return}el.textContent=abcStore("sc_abc_commitment",v)?"Compromiso guardado en este dispositivo.":"No fue posible guardar tu compromiso."}
+
+
+// Recupera las actividades y reflexiones guardadas para que sigan disponibles
+// cuando la persona vuelva a abrir la página en el mismo navegador.
+function abcLoadSaved(){
+  const read=(key)=>{try{return JSON.parse(localStorage.getItem(key)||"null")}catch(e){return null}};
+  const mood=read("sc_abc_mood");
+  if(mood){
+    const chosen=document.getElementById("abcChosen");
+    const intensity=document.getElementById("abcIntensity");
+    const trigger=document.getElementById("abcTrigger");
+    const need=document.getElementById("abcNeed");
+    if(chosen)chosen.value=mood.emotion||"";
+    if(intensity){intensity.value=String(mood.intensity||3);document.getElementById("abcIntensityValue").textContent=intensity.value+" de 5"}
+    if(trigger)trigger.value=mood.trigger||"";
+    if(need)need.value=mood.need||"";
+    document.querySelectorAll(".abc-emotion").forEach(b=>b.classList.toggle("selected",b.dataset.emotion===mood.emotion));
+    const msg=document.getElementById("abcMoodMsg");
+    if(msg)msg.textContent="Tu última reflexión guardada está disponible en este dispositivo.";
+  }
+  const micro=read("sc_abc_micro");
+  if(micro)document.querySelectorAll('input[name="abcMicro"]').forEach(r=>r.checked=r.value===micro.action);
+  const tree=read("sc_abc_tree");
+  if(tree){
+    document.getElementById("abcRoots").value=tree.roots||"";
+    document.getElementById("abcStrengths").value=tree.strengths||"";
+    document.getElementById("abcBranches").value=tree.branches||"";
+  }
+  const commitment=read("sc_abc_commitment");
+  if(typeof commitment==="string")document.getElementById("abcCommitment").value=commitment;
+  abcTransformPhrase();
+}
+
+// Copia la frase también en navegadores donde Clipboard API no esté disponible.
+function abcCopyPhrase(){
+  const el=document.getElementById("abcPhraseResult");
+  const value=el.textContent;
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(value).then(()=>{
+      document.getElementById("abcCommitMsg")?.replaceChildren();
+      alert("Frase copiada.");
+    }).catch(()=>abcCopyFallback(value));
+  }else abcCopyFallback(value);
+}
+function abcCopyFallback(value){
+  const field=document.createElement("textarea");
+  field.value=value;field.setAttribute("readonly","");
+  field.style.position="fixed";field.style.opacity="0";
+  document.body.appendChild(field);field.select();
+  let copied=false;
+  try{copied=document.execCommand("copy")}catch(e){}
+  field.remove();
+  if(copied)alert("Frase copiada.");else alert("Copia esta frase manualmente:\n"+value);
+}
+document.addEventListener("DOMContentLoaded",abcLoadSaved);
