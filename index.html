@@ -384,6 +384,36 @@ select:focus-visible {
 @media(max-width:520px){.jury-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.jury-two{grid-template-columns:1fr}.jury-controls{flex-wrap:wrap}.jury-controls span{order:3;flex-basis:100%}.jury-meta span{border-radius:12px}.jury-metrics{gap:6px}.jury-metrics div{padding:12px 5px}}
 @media(prefers-reduced-motion:reduce){.jury-panel{animation:none}.jury-progress div{transition:none}}
 
+
+/* AYUDA · ABC de las emociones para jóvenes */
+.help-hero{background:linear-gradient(130deg,#153b5d,#176f83 65%,#188b7b);color:#fff;border-radius:25px;padding:clamp(24px,4vw,42px);margin-bottom:18px}
+.help-hero h2{font-size:clamp(30px,5vw,44px);line-height:1.1;margin:9px 0}.help-hero p{max-width:800px;font-size:17px}
+.help-kicker{font-size:11px;font-weight:900;letter-spacing:1.4px;color:#b8f2e7}
+.help-hero-call{margin-top:18px;padding:13px 16px;border-radius:13px;background:#ffffff18;border:1px solid #ffffff45}
+.help-tabs{display:flex;gap:8px;overflow-x:auto;padding:5px 2px 13px;margin:10px 0}
+.help-tab{flex:0 0 auto;border:1px solid #d8e5ec;background:#fff;color:#23475b;border-radius:14px;padding:12px 15px;font-weight:800;cursor:pointer}
+.help-tab.active{background:#174d68;color:#fff;border-color:#174d68;box-shadow:0 5px 16px #174d6825}
+.help-panels{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(19px,4vw,34px);box-shadow:0 8px 25px #20365b0a}
+.help-panel[hidden]{display:none!important}.help-panel{animation:helpIn .2s ease}.help-label{font-size:11px;font-weight:900;letter-spacing:1.3px;color:#0b817b}
+.help-panel h3{font-size:clamp(24px,3vw,33px);color:#173d59;margin:8px 0}.help-panel>p{max-width:920px}
+.help-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:18px 0}
+.help-card{background:#f4f8fb;border:1px solid #e0e9ef;border-radius:16px;padding:17px}.help-card b{color:#185f70}.help-card p{margin:8px 0 0}.help-card ul{padding-left:20px;margin:9px 0 0}
+.help-alert{background:#fff4e9;border:1px solid #f2d1ad;border-left:5px solid #d67c2f;border-radius:12px;padding:14px 16px;margin:18px 0}
+.help-foot{font-size:13px;color:#637584}.help-steps{display:grid;gap:12px;margin:20px 0}
+.help-steps>div{display:flex;gap:13px;align-items:flex-start;border:1px solid #e1e9ef;border-radius:15px;padding:14px}
+.help-steps>div>b{display:grid;place-items:center;min-width:38px;height:38px;border-radius:50%;background:#e6f5f1;color:#087c73}
+.help-steps p{margin:4px 0 0}.help-contact{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:18px 0}
+.help-contact>div{border:1px solid #dce8ef;border-radius:16px;padding:18px;background:#f8fbfd}
+.help-contact span{display:block;color:#64798a;font-size:12px;font-weight:800}.help-contact b{display:block;color:#174d68;font-size:24px;margin:6px 0}
+.help-contact p{font-size:13px;min-height:54px}.help-contact a{display:inline-block;margin-top:6px;font-weight:800;color:#087e7b}
+.help-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:18px 0}
+.help-do,.help-avoid{padding:18px;border-radius:16px;border:1px solid #dce9e4;background:#f1faf6}.help-avoid{border-color:#f0dfd9;background:#fff6f3}
+.help-do ul,.help-avoid ul{padding-left:20px}.help-source{font-size:12px;color:#687887;margin:16px 2px}
+.help-source a{color:#087e7b;font-weight:800}
+@keyframes helpIn{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(max-width:650px){.help-grid,.help-contact,.help-two{grid-template-columns:1fr}.help-contact p{min-height:0}.help-tab{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.help-panel{animation:none}}
+
 </style>
 </head>
 <body>
@@ -529,6 +559,74 @@ select:focus-visible {
   <div class="card"><h3>Si algo te preocupa</h3><p>No tienes que resolverlo solo. Pedir ayuda es una forma de cuidarte.</p></div>
  </div>
  <div class="alert dangerBox" style="margin-top:18px"><b>Importante:</b> el Radar no determina si alguien tiene una enfermedad o un trastorno. Si existe una situación de riesgo real, la respuesta adecuada es buscar atención humana y profesional.</div>
+</section>
+
+<section id="ayuda" class="view">
+ <div class="help-hero">
+  <span class="help-kicker">ABC DE LAS EMOCIONES · ORIENTACIÓN PARA LAS Y LOS JÓVENES</span>
+  <h2>¿Qué hacemos si necesitamos ayuda?</h2>
+  <p>No tienes que resolver todo a solas. Reconocer lo que sientes, hablar con alguien de confianza y pedir apoyo oportunamente también es cuidarte.</p>
+  <div class="help-hero-call"><b>Si tú o alguien más está en peligro inmediato, busca a una persona adulta que pueda acompañarte y llama al 911.</b></div>
+ </div>
+ <div class="help-tabs" role="tablist" aria-label="Orientación para pedir ayuda">
+  <button class="help-tab active" id="help-tab-0" role="tab" aria-selected="true" aria-controls="help-panel-0" data-help-tab="0">🚦 Señales de alerta</button>
+  <button class="help-tab" id="help-tab-1" role="tab" aria-selected="false" aria-controls="help-panel-1" data-help-tab="1">🧭 ¿Qué puedo hacer?</button>
+  <button class="help-tab" id="help-tab-2" role="tab" aria-selected="false" aria-controls="help-panel-2" data-help-tab="2">🏫 ¿A dónde acudir?</button>
+  <button class="help-tab" id="help-tab-3" role="tab" aria-selected="false" aria-controls="help-panel-3" data-help-tab="3">📞 Contactos de apoyo</button>
+  <button class="help-tab" id="help-tab-4" role="tab" aria-selected="false" aria-controls="help-panel-4" data-help-tab="4">🤝 ¿Cómo acompañar?</button>
+ </div>
+ <div class="help-panels">
+  <article class="help-panel active" id="help-panel-0" role="tabpanel" aria-labelledby="help-tab-0" tabindex="0">
+   <span class="help-label">1 · OBSERVA SIN JUZGAR</span><h3>Señales de alerta: ¿cuándo conviene pedir apoyo?</h3>
+   <p>Una emoción difícil o un mal día no significan por sí solos que exista un problema de salud mental. Presta atención cuando el malestar es intenso, se prolonga, afecta tu vida diaria o aparecen varias señales al mismo tiempo.</p>
+   <div class="help-grid">
+    <div class="help-card"><b>💭 Emocionales</b><ul><li>Tristeza, miedo, ansiedad o enojo intensos y persistentes.</li><li>Sentir desesperanza, aislamiento o que ya nada tiene sentido.</li><li>Dificultad para manejar lo que sientes durante varias semanas.</li></ul></div>
+    <div class="help-card"><b>🔄 Cambios de conducta</b><ul><li>Aislarte o dejar de convivir con personas importantes.</li><li>Cambios marcados en sueño, alimentación, asistencia o rendimiento escolar.</li><li>Conductas impulsivas o consumo de alcohol u otras sustancias que te ponen en riesgo.</li></ul></div>
+    <div class="help-card"><b>🩹 Señales que requieren atención</b><ul><li>Autolesiones o marcas de daño intencional.</li><li>Hablar de hacerse daño, de no querer vivir o de dañar a alguien.</li><li>Relatar abuso, violencia, amenazas o sentirse en peligro.</li></ul></div>
+   </div>
+   <div class="help-alert"><b>Atención inmediata:</b> si hay intento de suicidio, riesgo de hacerse daño o dañar a otra persona, violencia en curso, intoxicación grave o peligro físico, no esperes a que pase. Busca ayuda presencial inmediata y llama al 911.</div>
+   <p class="help-foot">Estas señales orientan a buscar apoyo; no son un diagnóstico ni una lista para etiquetar a nadie.</p>
+  </article>
+  <article class="help-panel" id="help-panel-1" role="tabpanel" aria-labelledby="help-tab-1" tabindex="0" hidden>
+   <span class="help-label">2 · DA EL PRIMER PASO</span><h3>¿Qué puedo hacer si algo me preocupa?</h3>
+   <div class="help-steps">
+    <div><b>01</b><section><strong>Reconoce</strong><p>Haz una pausa e identifica qué estás sintiendo. No necesitas tener todas las palabras para explicarlo.</p></section></div>
+    <div><b>02</b><section><strong>Busca a alguien de confianza</strong><p>Puede ser un familiar, docente, tutor, orientador o persona adulta que te escuche y te tome en serio.</p></section></div>
+    <div><b>03</b><section><strong>Cuéntalo con claridad</strong><p>Puedes decir: “No me he sentido bien y necesito que me escuches” o “Me preocupa lo que está pasando y necesito ayuda”.</p></section></div>
+    <div><b>04</b><section><strong>Acuerden el siguiente paso</strong><p>Si el malestar continúa o afecta tu vida diaria, pide acompañamiento para acudir a un servicio de salud.</p></section></div>
+   </div>
+   <div class="help-alert"><b>Recuerda:</b> no tienes que esperar a estar en una crisis para pedir ayuda. Si la primera persona no te escucha, busca a otra persona adulta de confianza.</div>
+  </article>
+  <article class="help-panel" id="help-panel-2" role="tabpanel" aria-labelledby="help-tab-2" tabindex="0" hidden>
+   <span class="help-label">3 · ENCUENTRA APOYO CERCANO</span><h3>¿A dónde puedo acudir?</h3>
+   <div class="help-grid">
+    <div class="help-card"><b>🏠 En casa o comunidad</b><p>Madre, padre, tutor, familiar, persona cuidadora o adulta de confianza que pueda escucharte y acompañarte.</p></div>
+    <div class="help-card"><b>🏫 En tu escuela</b><p>Docente de confianza, tutor de grupo, orientación educativa, trabajo social, dirección o responsable de convivencia y protección escolar.</p></div>
+    <div class="help-card"><b>🏥 En servicios de salud</b><p>Centro de Salud de tu localidad o servicios especializados de salud mental y adicciones. Puedes solicitar orientación y preguntar por la canalización adecuada.</p></div>
+    <div class="help-card"><b>🛡️ Si hay violencia o abuso</b><p>Busca un lugar seguro y apoyo de una persona adulta de confianza. Pueden acompañarte a las autoridades competentes o servicios de protección. Si hay peligro inmediato, llama al 911.</p></div>
+   </div>
+   <p class="help-foot">Si eres estudiante, puedes comenzar con la persona adulta de confianza de tu escuela. No tienes que contar detalles frente al grupo ni resolverlo sin acompañamiento.</p>
+  </article>
+  <article class="help-panel" id="help-panel-3" role="tabpanel" aria-labelledby="help-tab-3" tabindex="0" hidden>
+   <span class="help-label">4 · CONTACTOS IMPORTANTES</span><h3>Teléfonos y recursos de orientación</h3>
+   <div class="help-contact">
+    <div><span>Atención a emergencias</span><b>911</b><p>Para peligro inmediato, emergencia médica, violencia en curso o riesgo para la vida.</p><a href="tel:911">Llamar al 911</a></div>
+    <div><span>Línea de la Vida</span><b>800 911 2000</b><p>Orientación y apoyo en salud mental y consumo de sustancias. Atención gratuita, confidencial y disponible las 24 horas, todos los días.</p><a href="tel:8009112000">Llamar a Línea de la Vida</a></div>
+    <div><span>Portal oficial</span><b>Línea de la Vida</b><p>Consulta información y opciones oficiales de orientación.</p><a href="https://www.gob.mx/lineadelavida" target="_blank" rel="noopener noreferrer">Abrir portal oficial ↗</a></div>
+    <div><span>ABC de las emociones</span><b>Guía para jóvenes</b><p>Consulta el material oficial de la Estrategia Nacional de Salud Mental para las y los Jóvenes.</p><a href="https://abcdelasemociones.sep.gob.mx/" target="_blank" rel="noopener noreferrer">Abrir sitio oficial SEP ↗</a></div>
+   </div>
+   <div class="help-alert"><b>Importante:</b> Línea de la Vida brinda orientación; si existe peligro inmediato o una emergencia, llama al 911 o acude a un servicio de urgencias acompañado.</div>
+  </article>
+  <article class="help-panel" id="help-panel-4" role="tabpanel" aria-labelledby="help-tab-4" tabindex="0" hidden>
+   <span class="help-label">5 · ACOMPAÑAR TAMBIÉN ES CUIDAR</span><h3>¿Cómo puedo ayudar a una amistad?</h3>
+   <div class="help-two">
+    <div class="help-do"><b>✓ Lo que sí ayuda</b><ul><li>Escuchar con calma y sin interrumpir.</li><li>Tomar en serio lo que expresa.</li><li>Preguntar: “¿Quieres que te acompañe a buscar ayuda?”.</li><li>Respetar su dignidad y privacidad, sin prometer guardar secretos si hay riesgo.</li><li>Acudir con una persona adulta o profesional cuando sea necesario.</li></ul></div>
+    <div class="help-avoid"><b>✕ Lo que debemos evitar</b><ul><li>Minimizar: “No es para tanto”.</li><li>Regañar, culpar o juzgar.</li><li>Presionar para que cuente todo.</li><li>Decir simplemente “cálmate” o “échale ganas”.</li><li>Dejar sola a una persona ante un riesgo inmediato.</li></ul></div>
+   </div>
+   <div class="help-alert"><b>Si alguien te cuenta que piensa hacerse daño:</b> escúchale sin juzgar, no lo mantengas en secreto, no le dejes a solas y busca de inmediato apoyo adulto y profesional. Si hay peligro inmediato, llama al 911.</div>
+  </article>
+ </div>
+ <div class="help-source"><b>Material de referencia:</b> Estrategia Nacional de Salud Mental para las y los Jóvenes, <i>El ABC de las emociones. Orientación para jóvenes</i>, Secretaría de Educación Pública. <a href="https://abcdelasemociones.sep.gob.mx/" target="_blank" rel="noopener noreferrer">Consultar materiales oficiales ↗</a></div>
 </section>
 
 <section id="impacto" class="view">
@@ -917,7 +1015,7 @@ const DIMS=["Ser consciente","Cuidarme","Identificar riesgos","Elegir","Necesito
 let answers={},lastAssessment=null;
 
 function nav(){
- const items=[["inicio","Inicio"],["emociones","ABC emociones"],["problema","Problema"],["datos","Datos"],["metodologia","Metodología"],["casos","Casos"],["radar","Mi Radar"],["prepost","Pre/Post"],["acciones","Acciones"],["apoyo","Red de apoyo"],["impacto","Impacto"],["viabilidad","Viabilidad"],["config","Configuración"],["jurado","Jurado"]];
+ const items=[["inicio","Inicio"],["emociones","ABC emociones"],["problema","Problema"],["datos","Datos"],["metodologia","Metodología"],["casos","Casos"],["radar","Mi Radar"],["prepost","Pre/Post"],["acciones","Acciones"],["apoyo","Red de apoyo"],["ayuda","¿Necesitas ayuda?"],["impacto","Impacto"],["viabilidad","Viabilidad"],["config","Configuración"],["jurado","Jurado"]];
  document.getElementById("nav").innerHTML=items.map(x=>`<button onclick="go('${x[0]}')">${x[1]}</button>`).join("");
 }
 function go(id){
@@ -1094,6 +1192,7 @@ if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js",{update
 <script src="abc-emociones.js"></script>
 <script src="v5.js"></script>
 <script src="jurado.js"></script>
+<script src="ayuda.js"></script>
 </body>
 </html>
 
