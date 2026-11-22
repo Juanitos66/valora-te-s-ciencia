@@ -1,12 +1,17 @@
 {
-  "name": "Valórate con S-Ciencia 4.0",
-  "short_name": "S-Ciencia 4.0",
+  "name": "Valórate con S-Ciencia 5.0",
+  "short_name": "S-Ciencia 5.0",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f4f7fa",
   "theme_color": "#123b5d",
-  "description": "Sistema educativo de prevención, autocuidado y toma de decisiones basado en evidencia.",
+  "description": "Plataforma educativa de autocuidado, formación socioemocional y toma de decisiones.",
   "icons": [
-    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
   ]
 }
