@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#123b5d">
-<meta name="description" content="Valórate con S-Ciencia 4.0: sistema educativo de prevención, autocuidado y toma de decisiones basado en evidencia.">
+<meta name="description" content="Valórate con S-Ciencia 5.0: sistema educativo de prevención, autocuidado y toma de decisiones basado en evidencia.">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<title>Valórate con S-Ciencia 4.0</title>
+<title>Valórate con S-Ciencia 5.0</title>
 <style>
 :root{
  --navy:#123b5d;--blue:#1d6fa5;--cyan:#20a4b8;--gold:#e7a93b;
@@ -317,13 +317,52 @@ select:focus-visible {
 .abc-choice-list input{width:auto;margin-right:8px}.abc-alert{background:#fff5ed;border-color:#f2d2b5}
 .abc-phrase-result{background:#f5eff9;border-radius:13px;padding:16px;margin:12px 0;color:#553468;font-weight:750}
 @media(max-width:620px){.abc-filter{grid-template-columns:1fr}.abc-hero{border-radius:20px}.abc-emotion-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.abc-activity-grid{grid-template-columns:1fr}}
+
+/* VERSIÓN 5.0 · Mi espacio personal */
+.v5-hero{background:linear-gradient(130deg,#e9f7ff,#f4edff 55%,#e8fbf4);border:1px solid #dce8f2;border-radius:26px;padding:clamp(22px,4vw,40px);margin:8px 0 20px}
+.v5-hero h2{font-size:clamp(30px,5vw,46px);line-height:1.08;color:#173b5c;margin:10px 0}
+.v5-kicker{font-size:11px;font-weight:900;letter-spacing:1.4px;color:#5d548b}
+.v5-hero-actions,.v5-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.v5-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}
+.v5-stat{background:#fff;border:1px solid var(--line,#e3eaf0);border-radius:17px;padding:17px;text-align:center}
+.v5-stat span{display:block;font-size:30px;font-weight:900;color:#176b76}
+.v5-stat small{color:#657486}
+.v5-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.v5-card{background:#fff;border:1px solid #e1e7ef;border-radius:20px;padding:20px;box-shadow:0 7px 20px #243b5308;margin:12px 0}
+.v5-card h3{color:#214b69;margin:7px 0}
+.v5-card label{display:block;font-weight:700;font-size:13px;margin:12px 0 6px}
+.v5-card textarea,.v5-card input:not([type=checkbox]),.v5-card input:not([type=checkbox]):not([type=radio]){width:100%;padding:11px;border:1px solid #cbd6e2;border-radius:11px;font:inherit;margin-top:6px}
+.v5-moods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:15px 0}
+.v5-moods button{border:1px solid #dce3ed;background:#fbfdff;border-radius:14px;padding:12px 6px;font-size:25px;cursor:pointer}
+.v5-moods button span{display:block;font-size:12px;font-weight:700;color:#35475a;margin-top:4px}
+.v5-moods button.selected{border:2px solid #247d82;background:#eaf8f6}
+.v5-feedback{font-size:13px;color:#28705e;min-height:18px;margin:10px 0 0}
+.v5-actions-list{display:grid;gap:9px;margin:14px 0}
+.v5-actions-list label,.v5-goal-item label{display:flex;align-items:flex-start;gap:8px;padding:10px;border:1px solid #e1e7ef;border-radius:11px;font-weight:500}
+.v5-actions-list input,.v5-goal-item input{width:auto;margin-top:3px;accent-color:#247d82}
+.v5-goal-list{display:grid;gap:9px;margin-top:13px}
+.v5-goal-item{border:1px solid #e1e7ef;border-radius:13px;padding:10px}
+.v5-goal-item small{display:block;color:#6b7785;margin:5px 0 0 25px}
+.v5-goal-item .done{text-decoration:line-through;color:#687887}
+.v5-delete{border:0;background:transparent;color:#a23c3c;text-decoration:underline;cursor:pointer;margin:7px 0 0 25px}
+.v5-muted{color:#738092;font-size:13px}
+.v5-accessibility{background:#f7f9fc}
+.v5-privacy{border-left:5px solid #d69a42}
+.v5-home-shortcut{display:flex;justify-content:space-between;align-items:center;gap:18px;background:#edf8f6;border:1px solid #d4eae5;border-radius:18px;padding:18px;margin-top:18px}
+.v5-home-shortcut p{margin:5px 0 0}
+.v5-high-contrast{background:#fff!important;color:#000!important}
+.v5-high-contrast .card,.v5-high-contrast .v5-card,.v5-high-contrast .abc-card{border:2px solid #111!important;color:#000!important}
+.v5-high-contrast p,.v5-high-contrast label,.v5-high-contrast small{color:#111!important}
+@media(max-width:720px){.v5-grid{grid-template-columns:1fr}.v5-home-shortcut{align-items:flex-start;flex-direction:column}.v5-stats{gap:7px}.v5-stat{padding:12px 5px}.v5-stat span{font-size:25px}}
+@media(max-width:420px){.v5-moods{grid-template-columns:repeat(2,minmax(0,1fr))}.v5-stats small{font-size:11px}}
+
 </style>
 </head>
 <body>
 <header>
  <div class="brand">
   <div class="logo">S</div>
-  <div><h1>Valórate con S-Ciencia</h1><p>Radar S-Ciencia 4.0 · SER CONSCIENTE · CECyTE</p></div>
+  <div><h1>Valórate con S-Ciencia</h1><p>Radar S-Ciencia 5.0 · SER CONSCIENTE · CECyTE</p></div>
  </div>
  <nav id="nav"></nav>
 </header>
@@ -331,7 +370,7 @@ select:focus-visible {
 <main>
 <section id="inicio" class="view active">
  <div class="hero">
-  <span class="tag">SISTEMA EDUCATIVO · VERSIÓN 4.0</span>
+  <span class="tag">SISTEMA EDUCATIVO · VERSIÓN 5.0</span>
   <h2>Los datos nos muestran lo que pasa.<br><strong>La ciencia nos ayuda a comprenderlo.</strong></h2>
   <p><b>Valórate con S-Ciencia</b> convierte información estadística en reflexión, toma de decisiones, acciones de autocuidado y evaluación del cambio.</p>
   <button class="btn" onclick="go('radar')">Entrar a Mi Radar</button>
@@ -767,7 +806,7 @@ select:focus-visible {
 </main>
 
 <footer>
- <b>Valórate con S-Ciencia 4.0</b> · Prototipo educativo de prevención y autocuidado.<br>
+ <b>Valórate con S-Ciencia 5.0</b> · Prototipo educativo de prevención y autocuidado.<br>
  No sustituye evaluación clínica ni atención profesional. No presenta resultados ficticios como evidencia.<br>
  Fuentes oficiales de referencia:
  <a href="https://www.inegi.org.mx/programas/mociba/2024/" target="_blank">INEGI MOCIBA 2024</a> ·
@@ -972,6 +1011,7 @@ nav();renderData();loadLast();loadCommit();renderRecords();showConfig();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(reg=>reg.update()).catch(()=>{});
 </script>
 <script src="abc-emociones.js"></script>
+<script src="v5.js"></script>
 </body>
 </html>
 
