@@ -356,6 +356,34 @@ select:focus-visible {
 @media(max-width:720px){.v5-grid{grid-template-columns:1fr}.v5-home-shortcut{align-items:flex-start;flex-direction:column}.v5-stats{gap:7px}.v5-stat{padding:12px 5px}.v5-stat span{font-size:25px}}
 @media(max-width:420px){.v5-moods{grid-template-columns:repeat(2,minmax(0,1fr))}.v5-stats small{font-size:11px}}
 
+
+/* MODO JURADO 5.1 · recorrido interactivo y accesible */
+.jury-hero{background:linear-gradient(130deg,#14213d,#24528a 62%,#087f8c);color:#fff;border-radius:25px;padding:clamp(24px,4vw,42px);margin-bottom:20px}
+.jury-hero h2{font-size:clamp(30px,5vw,46px);margin:8px 0}.jury-hero p{max-width:780px}
+.jury-kicker{font-size:11px;font-weight:900;letter-spacing:1.4px;color:#b9f4e9}
+.jury-meta{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.jury-meta span{background:#ffffff1b;border:1px solid #ffffff35;border-radius:99px;padding:7px 11px;font-size:12px}
+.jury-progress-wrap{background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px 17px;margin:15px 0}
+.jury-progress-label{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-bottom:9px}
+.jury-progress{height:9px;border-radius:99px;background:#e7edf3;overflow:hidden}.jury-progress div{height:100%;width:16.666%;background:linear-gradient(90deg,#14b8a6,#2563eb);transition:width .25s}
+.jury-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:16px 0}
+.jury-tab{border:1px solid #dce5ef;background:#fff;color:#253c58;border-radius:14px;padding:12px 7px;font-weight:800;cursor:pointer;min-height:66px}
+.jury-tab span{display:block;font-size:11px;color:#0b8b88;margin-bottom:3px}.jury-tab.active{background:#183d67;color:#fff;border-color:#183d67;box-shadow:0 5px 15px #183d6728}.jury-tab.active span{color:#a8f1e4}
+.jury-tab:focus-visible,.jury-controls button:focus-visible,details summary:focus-visible{outline:3px solid #f59e0b;outline-offset:3px}
+.jury-panels{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(20px,4vw,36px);box-shadow:0 8px 25px #20365b0a}
+.jury-panel{animation:juryIn .22s ease}.jury-panel[hidden]{display:none!important}@keyframes juryIn{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:none}}
+.jury-number{font-size:11px;font-weight:900;letter-spacing:1.5px;color:#0b8b88}.jury-panel h3{font-size:clamp(24px,3vw,34px);color:#173b5c;margin:8px 0 12px}.jury-lead{font-size:clamp(17px,2vw,21px);font-weight:650;color:#314b68;max-width:900px}
+.jury-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:20px 0}
+.jury-insight{background:#f4f8fc;border:1px solid #e0e9f2;border-radius:16px;padding:17px}.jury-insight b{color:#155d72}.jury-insight p{margin:7px 0 0}
+.jury-note{background:#fff8e9;border-left:4px solid #e7a93b;padding:12px 15px;border-radius:0 12px 12px 0;font-size:13px}
+.jury-flow{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:22px 0}.jury-flow span{background:#eaf5f8;border:1px solid #d4e8ee;border-radius:12px;padding:10px 12px;font-weight:800;color:#174b65}.jury-flow i{font-style:normal;color:#0b8b88;font-weight:900}
+.jury-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:20px 0}.jury-metrics div{background:#eef7fa;border-radius:15px;padding:16px;text-align:center}.jury-metrics b{display:block;font-size:25px;color:#176b8f}.jury-metrics small{font-size:12px;color:#536a7b}
+.jury-impact-list{display:grid;gap:9px;margin:18px 0}.jury-impact-list div{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid #e1e9f0;border-radius:13px}.jury-impact-list b{display:grid;place-items:center;min-width:34px;height:34px;background:#e7f5f2;color:#087f75;border-radius:50%}
+.jury-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:16px 0}.jury-controls span{font-size:12px;color:var(--muted);text-align:center}
+.jury-questions{margin-top:20px}.jury-questions details{border-top:1px solid var(--line);padding:12px 2px}.jury-questions summary{font-weight:750;cursor:pointer;color:#234866}.jury-questions details p{margin:9px 0 3px}
+@media(max-width:850px){.jury-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:520px){.jury-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.jury-two{grid-template-columns:1fr}.jury-controls{flex-wrap:wrap}.jury-controls span{order:3;flex-basis:100%}.jury-meta span{border-radius:12px}.jury-metrics{gap:6px}.jury-metrics div{padding:12px 5px}}
+@media(prefers-reduced-motion:reduce){.jury-panel{animation:none}.jury-progress div{transition:none}}
+
 </style>
 </head>
 <body>
@@ -577,23 +605,76 @@ select:focus-visible {
 </section>
 
 <section id="jurado" class="view">
- <h2>Modo jurado · defensa de 3–5 minutos</h2>
- <div class="grid">
-  <div class="card"><h3>1. Problema</h3><p>¿Cómo transformar datos sociales en decisiones de autocuidado sin diagnosticar ni etiquetar?</p></div>
-  <div class="card"><h3>2. Solución</h3><p>Radar S-Ciencia: datos oficiales → autoconocimiento → escenarios → acciones → pretest/postest.</p></div>
-  <div class="card"><h3>3. Evidencia</h3><p>El sistema está preparado para medir cambio; los resultados reales se obtienen con pilotaje y análisis estadístico.</p></div>
-  <div class="card"><h3>4. Innovación</h3><p>Integra ciencia de datos, formación socioemocional y prevención educativa en una experiencia replicable.</p></div>
-  <div class="card"><h3>5. Viabilidad</h3><p>Puede funcionar localmente y evolucionar a una base central con autenticación docente y reglas de seguridad.</p></div>
-  <div class="card"><h3>6. Impacto</h3><p>Busca fortalecer autocuidado, reconocimiento de factores de atención, toma de decisiones y búsqueda de apoyo.</p></div>
+ <div class="jury-hero">
+  <span class="jury-kicker">VALÓRATE CON S-CIENCIA 5.0 · PRESENTACIÓN INTERACTIVA</span>
+  <h2>Bienvenido, jurado evaluador</h2>
+  <p>Recorra los seis apartados para conocer el problema, la solución, la evidencia, la innovación, la viabilidad y el impacto del proyecto.</p>
+  <div class="jury-meta"><span>⏱ Recorrido sugerido: 3–5 minutos</span><span>📱 Compatible con celular y computadora</span><span>🔓 Acceso público de consulta</span></div>
  </div>
- <div class="card" style="margin-top:18px">
-  <h3>Preguntas difíciles</h3>
-  <p><b>¿Esto diagnostica?</b> No. Es educativo; no sustituye evaluación clínica.</p>
-  <p><b>¿Cómo demostrarán que funciona?</b> Con pretest/postest, validación del instrumento, análisis estadístico y reporte transparente de limitaciones.</p>
-  <p><b>¿Qué protege a los estudiantes?</b> Minimización de datos, código anónimo, no solicitar identificadores directos, acceso docente autenticado y resultados agregados.</p>
-  <p><b>¿Qué hace diferente al proyecto?</b> No se limita a informar: convierte evidencia en reflexión, decisiones, acciones y medición de cambio.</p>
+ <div class="jury-progress-wrap">
+  <div class="jury-progress-label"><b id="juryStepLabel">Apartado 1 de 6</b><span id="juryPercent">17% completado</span></div>
+  <div class="jury-progress"><div id="juryProgressBar"></div></div>
  </div>
- <div class="alert info"><b>Demostración para jurado:</b> puede utilizarse sin base central. Si la nube está configurada, se muestra la actualización agregada del panel docente.</div>
+ <div class="jury-tabs" role="tablist" aria-label="Seis apartados del modo jurado">
+  <button class="jury-tab active" id="jury-tab-0" role="tab" aria-selected="true" aria-controls="jury-panel-0" data-jury-tab="0"><span>01</span> Problema</button>
+  <button class="jury-tab" id="jury-tab-1" role="tab" aria-selected="false" aria-controls="jury-panel-1" data-jury-tab="1"><span>02</span> Solución</button>
+  <button class="jury-tab" id="jury-tab-2" role="tab" aria-selected="false" aria-controls="jury-panel-2" data-jury-tab="2"><span>03</span> Evidencia</button>
+  <button class="jury-tab" id="jury-tab-3" role="tab" aria-selected="false" aria-controls="jury-panel-3" data-jury-tab="3"><span>04</span> Innovación</button>
+  <button class="jury-tab" id="jury-tab-4" role="tab" aria-selected="false" aria-controls="jury-panel-4" data-jury-tab="4"><span>05</span> Viabilidad</button>
+  <button class="jury-tab" id="jury-tab-5" role="tab" aria-selected="false" aria-controls="jury-panel-5" data-jury-tab="5"><span>06</span> Impacto</button>
+ </div>
+ <div class="jury-panels">
+  <article class="jury-panel active" id="jury-panel-0" role="tabpanel" aria-labelledby="jury-tab-0" tabindex="0">
+   <span class="jury-number">01 · EL RETO</span><h3>El problema que queremos atender</h3>
+   <p class="jury-lead">¿Cómo transformar datos sociales en decisiones de autocuidado sin diagnosticar ni etiquetar a las y los estudiantes?</p>
+   <div class="jury-two"><div class="jury-insight"><b>Situación</b><p>Las y los adolescentes reciben información sobre riesgos y bienestar, pero necesitan herramientas educativas para relacionarla con su vida cotidiana.</p></div><div class="jury-insight"><b>Necesidad</b><p>La escuela requiere estrategias que conviertan información confiable en reflexión, prevención, toma de decisiones y búsqueda oportuna de apoyo.</p></div></div>
+   <p class="jury-note">El proyecto aborda una necesidad educativa y preventiva; no realiza diagnósticos clínicos.</p>
+   <button class="btn alt" type="button" onclick="go('problema')">Consultar planteamiento del problema ↗</button>
+  </article>
+  <article class="jury-panel" id="jury-panel-1" role="tabpanel" aria-labelledby="jury-tab-1" tabindex="0" hidden>
+   <span class="jury-number">02 · LA PROPUESTA</span><h3>La solución: un recorrido educativo integral</h3>
+   <p class="jury-lead">Valórate con S-Ciencia articula evidencia, autoconocimiento y decisiones en una sola experiencia digital.</p>
+   <div class="jury-flow"><span>Datos oficiales</span><i>→</i><span>Me reconozco</span><i>→</i><span>Reflexiono</span><i>→</i><span>Decido</span><i>→</i><span>Actúo y evalúo</span></div>
+   <div class="jury-two"><div class="jury-insight"><b>Radar S-Ciencia</b><p>36 reactivos organizados en seis dimensiones para promover la reflexión y obtener resultados educativos.</p></div><div class="jury-insight"><b>Experiencias complementarias</b><p>Casos de decisión, ABC de las emociones, red de apoyo, acciones de autocuidado y evaluación Pre/Post.</p></div></div>
+   <button class="btn alt" type="button" onclick="go('radar')">Explorar Mi Radar ↗</button>
+  </article>
+  <article class="jury-panel" id="jury-panel-2" role="tabpanel" aria-labelledby="jury-tab-2" tabindex="0" hidden>
+   <span class="jury-number">03 · SUSTENTO</span><h3>Evidencia y evaluación</h3>
+   <p class="jury-lead">La propuesta contempla medir cambios educativos mediante una evaluación antes y después de la intervención.</p>
+   <div class="jury-metrics"><div><b>36</b><small>reactivos del Radar</small></div><div><b>6</b><small>dimensiones</small></div><div><b>Pre / Post</b><small>momentos de evaluación</small></div></div>
+   <div class="jury-insight"><b>Transparencia de resultados</b><p>Los resultados reales deben presentarse a partir de registros válidos, pilotaje y análisis estadístico. La plataforma no atribuye mejoras sin evidencia empírica.</p></div>
+   <p class="jury-note">El instrumento es educativo y de autopercepción. Su interpretación requiere considerar validación, tamaño de muestra y limitaciones metodológicas.</p>
+   <button class="btn alt" type="button" onclick="go('prepost')">Ver evaluación Pretest / Postest ↗</button>
+  </article>
+  <article class="jury-panel" id="jury-panel-3" role="tabpanel" aria-labelledby="jury-tab-3" tabindex="0" hidden>
+   <span class="jury-number">04 · DIFERENCIADOR</span><h3>¿Dónde está la innovación?</h3>
+   <p class="jury-lead">No se limita a informar: conecta ciencia de datos, formación socioemocional y prevención en una ruta de aprendizaje interactiva.</p>
+   <div class="jury-two"><div class="jury-insight"><b>Integración</b><p>Reúne datos de contexto, reflexión personal, escenarios prácticos, acciones y seguimiento en un mismo entorno.</p></div><div class="jury-insight"><b>Experiencia</b><p>Incluye navegación interactiva, recursos para estudiantes, herramientas de consulta y una presentación específica para evaluación del proyecto.</p></div></div>
+   <button class="btn alt" type="button" onclick="go('emociones')">Conocer el ABC de las emociones ↗</button>
+  </article>
+  <article class="jury-panel" id="jury-panel-4" role="tabpanel" aria-labelledby="jury-tab-4" tabindex="0" hidden>
+   <span class="jury-number">05 · IMPLEMENTACIÓN</span><h3>Viabilidad y protección de datos</h3>
+   <p class="jury-lead">La plataforma web puede consultarse desde dispositivos con navegador y contempla funcionamiento local; la sincronización central es opcional.</p>
+   <div class="jury-two"><div class="jury-insight"><b>Implementación</b><p>Puede utilizarse en computadora, tableta o teléfono. Algunas funciones dependen de conexión y de la configuración técnica disponible.</p></div><div class="jury-insight"><b>Privacidad</b><p>Se priorizan códigos anónimos y resultados agregados. Los datos personales del espacio individual permanecen en el navegador del usuario.</p></div></div>
+   <p class="jury-note">La autenticación docente y la base central solo operan cuando Supabase está configurado correctamente. Este modo de consulta para jurado no solicita contraseña.</p>
+   <button class="btn alt" type="button" onclick="go('viabilidad')">Consultar viabilidad ↗</button>
+  </article>
+  <article class="jury-panel" id="jury-panel-5" role="tabpanel" aria-labelledby="jury-tab-5" tabindex="0" hidden>
+   <span class="jury-number">06 · TRANSFORMACIÓN</span><h3>Impacto que buscamos</h3>
+   <p class="jury-lead">Fortalecer habilidades para reconocer emociones y factores de atención, cuidar el bienestar, tomar decisiones y pedir apoyo.</p>
+   <div class="jury-impact-list"><div><b>01</b><span>Mayor autoconocimiento y reconocimiento emocional.</span></div><div><b>02</b><span>Decisiones más reflexivas ante situaciones de riesgo.</span></div><div><b>03</b><span>Identificación de redes de apoyo y recursos disponibles.</span></div><div><b>04</b><span>Seguimiento de aprendizajes mediante evaluación educativa.</span></div></div>
+   <p class="jury-note">El impacto esperado debe distinguirse de los resultados efectivamente observados y documentados.</p>
+   <button class="btn alt" type="button" onclick="go('impacto')">Consultar impacto y seguimiento ↗</button>
+  </article>
+ </div>
+ <div class="jury-controls"><button class="btn alt" id="juryPrev" type="button" disabled>← Anterior</button><span id="juryControlHint">Seleccione una pestaña o avance al siguiente apartado</span><button class="btn" id="juryNext" type="button">Siguiente apartado →</button></div>
+ <div class="card jury-questions"><h3>Preguntas frecuentes del jurado</h3>
+  <details><summary>¿La plataforma diagnostica problemas de salud mental o adicciones?</summary><p>No. Es una herramienta educativa de reflexión y prevención; no sustituye una valoración profesional ni emite diagnósticos.</p></details>
+  <details><summary>¿Cómo se evaluará si la estrategia funciona?</summary><p>Mediante aplicación Pretest/Postest, revisión de la calidad del instrumento y análisis estadístico transparente de los datos disponibles.</p></details>
+  <details><summary>¿Cómo se protege la información de los estudiantes?</summary><p>Se promueve el uso de códigos anónimos, la minimización de datos y la presentación de resultados agregados. Mi espacio guarda sus datos en el dispositivo.</p></details>
+  <details><summary>¿Qué hace diferente al proyecto?</summary><p>Integra evidencia, reflexión, toma de decisiones, acciones preventivas y medición educativa en una misma plataforma.</p></details>
+ </div>
+ <div class="alert info"><b>Acceso directo:</b> comparte el enlace de esta página terminado en <code>?modo=jurado</code>. El jurado podrá abrir directamente esta presentación sin buscar la sección en el menú.</div>
 </section>
 <!-- Módulo ABC de las emociones · Valórate con S-Ciencia -->
 <section id="emociones" class="view">
@@ -1012,6 +1093,7 @@ if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js",{update
 </script>
 <script src="abc-emociones.js"></script>
 <script src="v5.js"></script>
+<script src="jurado.js"></script>
 </body>
 </html>
 
