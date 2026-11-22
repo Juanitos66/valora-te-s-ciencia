@@ -680,6 +680,90 @@ select:focus-visible {
   <p class="abc-source">Enfoque complementario basado en los materiales de Asamblea ABC para madres, padres y personas cuidadoras, ciclo 2026–2027: convivencia pacífica, acompañamiento familiar, escucha activa y acuerdos compartidos.</p>
  </div>
 </section>
+<section id="mi-espacio" class="view">
+ <div class="v5-hero">
+  <span class="v5-kicker">VERSIÓN 5.0 · MI BIENESTAR, MI CAMINO</span>
+  <h2>Mi espacio personal</h2>
+  <p>Un lugar privado para reconocer cómo te sientes, organizar pequeños pasos y observar tus avances. No hay calificaciones ni juicios.</p>
+  <div class="v5-hero-actions">
+   <button class="btn" onclick="v5GoCheckin()">💛 Hacer mi pausa de hoy</button>
+   <button class="btn alt" onclick="v5GoGoal()">🎯 Escribir una meta</button>
+  </div>
+ </div>
+ <div class="v5-stats" aria-live="polite">
+  <div class="v5-stat"><span id="v5CheckinCount">0</span><small>pausas registradas</small></div>
+  <div class="v5-stat"><span id="v5GoalCount">0</span><small>metas personales</small></div>
+  <div class="v5-stat"><span id="v5ActionCount">0</span><small>acciones completadas</small></div>
+ </div>
+ <div class="v5-grid">
+  <article class="v5-card" id="v5-checkin">
+   <span class="v5-kicker">01 · ME RECONOZCO</span><h3>¿Cómo llego hoy?</h3>
+   <p>Elige una opción que se acerque a tu estado de ánimo. Puedes cambiarla o no responder.</p>
+   <div class="v5-moods" role="group" aria-label="Estado de ánimo">
+    <button type="button" data-v5-mood="Con energía" onclick="v5ChooseMood(this)">😊<span>Con energía</span></button>
+    <button type="button" data-v5-mood="En calma" onclick="v5ChooseMood(this)">😌<span>En calma</span></button>
+    <button type="button" data-v5-mood="Con dudas" onclick="v5ChooseMood(this)">🤔<span>Con dudas</span></button>
+    <button type="button" data-v5-mood="Con estrés" onclick="v5ChooseMood(this)">😣<span>Con estrés</span></button>
+    <button type="button" data-v5-mood="Triste o desanimado" onclick="v5ChooseMood(this)">😔<span>Desanimado</span></button>
+    <button type="button" data-v5-mood="Prefiero no decirlo" onclick="v5ChooseMood(this)">🌱<span>Prefiero no decirlo</span></button>
+   </div>
+   <label for="v5-checkin-note">Si quieres, escribe qué necesitas hoy</label>
+   <textarea id="v5-checkin-note" rows="3" maxlength="500" placeholder="Ej. necesito organizarme, descansar o hablar con alguien..."></textarea>
+   <button class="btn" onclick="v5SaveCheckin()">Guardar mi pausa</button>
+   <p class="v5-feedback" id="v5-checkin-feedback" aria-live="polite"></p>
+  </article>
+  <article class="v5-card" id="v5-goals">
+   <span class="v5-kicker">02 · DOY UN PASO</span><h3>Mi meta pequeña</h3>
+   <p>Una meta posible para hoy o esta semana. Lo pequeño también cuenta.</p>
+   <label for="v5-goal">¿Qué paso quiero dar?</label>
+   <input id="v5-goal" maxlength="140" placeholder="Ej. estudiar 20 minutos sin distracciones">
+   <label for="v5-goal-date">¿Para cuándo?</label>
+   <input id="v5-goal-date" type="date">
+   <button class="btn" onclick="v5AddGoal()">Agregar meta</button>
+   <div id="v5-goal-list" class="v5-goal-list"></div>
+   <p class="v5-feedback" id="v5-goal-feedback" aria-live="polite"></p>
+  </article>
+  <article class="v5-card">
+   <span class="v5-kicker">03 · ME ORGANIZO</span><h3>Mis acciones de autocuidado</h3>
+   <p>Marca las acciones que realizaste. No es una competencia: es una guía amable.</p>
+   <div class="v5-actions-list" id="v5-actions-list">
+    <label><input type="checkbox" value="Tomé agua y atendí mi cuerpo"> Tomé agua y atendí mi cuerpo</label>
+    <label><input type="checkbox" value="Hice una pausa o respiré con calma"> Hice una pausa o respiré con calma</label>
+    <label><input type="checkbox" value="Me moví o descansé un momento"> Me moví o descansé un momento</label>
+    <label><input type="checkbox" value="Hablé con alguien de confianza"> Hablé con alguien de confianza</label>
+    <label><input type="checkbox" value="Avancé en una meta personal"> Avancé en una meta personal</label>
+   </div>
+   <button class="btn" onclick="v5SaveActions()">Guardar mis acciones</button>
+   <p class="v5-feedback" id="v5-actions-feedback" aria-live="polite"></p>
+  </article>
+  <article class="v5-card">
+   <span class="v5-kicker">04 · REFLEXIONO</span><h3>Mi bitácora personal</h3>
+   <p>Escribe una idea que quieras recordar. Evita incluir nombres, teléfonos u otros datos personales.</p>
+   <textarea id="v5-journal" rows="5" maxlength="1000" placeholder="Hoy aprendí que..."></textarea>
+   <div class="v5-row">
+    <button class="btn" onclick="v5SaveJournal()">Guardar reflexión</button>
+    <button class="btn alt" onclick="v5ExportJournal()">Exportar mis notas</button>
+   </div>
+   <p class="v5-feedback" id="v5-journal-feedback" aria-live="polite"></p>
+  </article>
+ </div>
+ <div class="v5-card v5-accessibility">
+  <span class="v5-kicker">ACCESIBILIDAD</span><h3>Adapta la lectura</h3>
+  <p>Modifica el tamaño del texto o activa un contraste más alto.</p>
+  <div class="v5-row">
+   <button class="btn alt" onclick="v5TextSize(-1)" aria-label="Reducir tamaño del texto">A−</button>
+   <button class="btn alt" onclick="v5TextSize(1)" aria-label="Aumentar tamaño del texto">A+</button>
+   <button class="btn alt" onclick="v5ToggleContrast()" id="v5-contrast-btn" aria-pressed="false">◐ Alto contraste</button>
+   <button class="btn alt" onclick="v5ResetDisplay()">Restablecer lectura</button>
+  </div>
+ </div>
+ <div class="v5-card v5-privacy">
+  <h3>Tu espacio, tu decisión</h3>
+  <p>La información de esta sección se guarda en el almacenamiento local del navegador de este dispositivo. No se envía a Supabase ni al panel docente. Si compartes el dispositivo, cierra tu sesión de usuario y evita guardar información que no quieras que otra persona pueda ver.</p>
+  <button class="btn danger" onclick="v5ClearPersonalData()">Borrar mis datos de este espacio</button>
+ </div>
+</section>
+
 </main>
 
 <footer>
