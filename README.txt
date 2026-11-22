@@ -1,93 +1,47 @@
-# VALÓRATE CON S-CIENCIA 4.0
+# VALÓRATE CON S-CIENCIA 5.0
 
 ## Qué es
-Sistema educativo de prevención, autocuidado y toma de decisiones basado en evidencia.
+Plataforma educativa de prevención, autocuidado, formación socioemocional y toma de decisiones basada en evidencia. Mantiene el Radar educativo ISAC, el ABC de las emociones, la evaluación Pre/Post y el modo local con sincronización central opcional.
 
-La versión 4.0 conserva el modo demostración/local de las versiones anteriores y añade una arquitectura preparada para datos centrales:
+## Novedades de la versión 5.0
+- Nuevo espacio personal para estudiantes.
+- Registro local de pausas de bienestar y estados de ánimo voluntarios.
+- Metas pequeñas con fecha, seguimiento y opción de eliminar.
+- Lista de acciones de autocuidado por día.
+- Bitácora personal y exportación de datos en JSON.
+- Controles de accesibilidad: tamaño de lectura y alto contraste.
+- Integración en navegación principal y acceso desde Inicio.
+- Actualización de PWA y Service Worker para cargar los nuevos archivos.
+- Los datos del espacio personal se mantienen localmente y no se envían a Supabase ni al panel docente.
 
-**Estudiante → código anónimo → Radar ISAC → Pre/Post → base central → panel docente → indicadores agregados**
+## Módulos que conserva
+- Radar ISAC educativo de 36 reactivos y seis dimensiones.
+- Evaluación Pretest/Postest y exportación CSV.
+- Panel docente central con indicadores agregados, sujeto a configuración de Supabase.
+- ABC de las emociones con mapa emocional, 20 actividades, pausa y regulación, red de apoyo, familia y escuela.
+- Casos de toma de decisiones, fuentes oficiales, metodología y modo jurado.
 
-## Lo nuevo en 4.0
-- 36 reactivos ISAC educativos.
-- Seis dimensiones: Ser consciente, Cuidarme, Identificar riesgos, Elegir, Necesito apoyo y Alcanzar mi futuro.
-- Cálculo de puntaje educativo 0–100 y resultados por dimensión.
-- Pretest/Postest.
-- Registro local automático.
-- Exportación CSV.
-- Sincronización opcional con Supabase.
-- Seudonimización del código mediante HMAC con secreto conservado en la base de datos.
-- Panel docente con una función RPC que devuelve exclusivamente indicadores agregados; no expone filas individuales.
-- Panel docente autenticado.
-- Indicadores agregados: participantes, promedio pre, promedio post y cambio relativo.
-- Casos interactivos de toma de decisiones.
-- Catálogo de fuentes oficiales INEGI.
-- Modo jurado.
-- Avisos de privacidad y límites científicos.
-- PWA/Service Worker para facilitar uso en dispositivos.
+## Privacidad y límites
+La sección Mi espacio guarda la información en el navegador del dispositivo. No es una plataforma de atención clínica. El Radar y el resto de los ejercicios no diagnostican trastornos ni enfermedades. No ingreses datos sensibles ni identificadores personales. Si compartes un dispositivo, considera borrar tus datos al terminar.
 
-## IMPORTANTE SOBRE LOS DATOS
-La versión 4.0 está preparada para recoger datos reales, pero no debe comenzar una recolección institucional real hasta contar con:
-1. autorización del plantel/institución;
-2. consentimiento/asentimiento cuando corresponda;
-3. revisión de protección de datos;
-4. protocolo de atención y canalización;
-5. validación del instrumento;
-6. pilotaje.
-
-El sistema NO diagnostica depresión, adicciones, obesidad, riesgo suicida ni enfermedades.
+Antes de recolectar datos institucionales reales se requiere autorización del plantel, revisión de protección de datos, consentimiento/asentimiento cuando corresponda, protocolo de atención y canalización, validación del instrumento y pilotaje.
 
 ## Modo local
-Sin configurar nada, `index.html` funciona y guarda los resultados en el navegador del dispositivo.
+La aplicación funciona sin configurar Supabase. Los registros de Radar/Pretest quedan en el dispositivo. Mi espacio utiliza una clave de almacenamiento separada y no sincroniza con el panel central.
 
 ## Activar base central con Supabase
 1. Crea un proyecto en Supabase.
-2. Abre SQL Editor.
-3. Copia y ejecuta todo `schema.sql`.
-4. En Authentication crea la cuenta institucional del docente.
-5. Abre `config.js`.
-6. Sustituye:
-   - `PEGA_AQUI_TU_URL_DE_SUPABASE`
-   - `PEGA_AQUI_TU_CLAVE_ANON_PUBLICA`
-7. No uses `service_role`.
-8. Sube `index.html`, `config.js`, `manifest.json`, `sw.js` e `icon.svg` a GitHub Pages.
-9. Entra a Impacto → Panel docente e inicia sesión.
-10. Prueba primero con códigos y datos ficticios.
+2. Ejecuta `schema.sql` en SQL Editor.
+3. Crea la cuenta docente en Authentication.
+4. Sustituye en `config.js` la URL del proyecto y la clave pública ANON.
+5. Nunca uses `service_role` en el frontend.
+6. Publica los archivos del repositorio en GitHub Pages.
+7. Prueba con códigos y datos ficticios antes de cualquier aplicación real.
 
-El panel central usa `get_assessment_summary()` y requiere una sesión docente autenticada. Los promedios pre/post se calculan únicamente con participantes que tienen ambas mediciones. El código de participante debe ser aleatorio y mantenerse bajo resguardo del responsable; el HMAC es seudonimización, no anonimato absoluto.
-
-## Recomendación para investigación
-Mantener separados:
-A) datos de contexto oficial (INEGI y otras fuentes);
-B) resultados educativos anónimos del estudiante.
-
-No convertir estadísticas poblacionales de México/Tlaxcala en un "riesgo individual".
-
-## Fuentes oficiales de referencia
-- INEGI MOCIBA 2024: https://www.inegi.org.mx/programas/mociba/2024/
-- INEGI Estadísticas de Defunciones Registradas: https://www.inegi.org.mx/programas/edr/
-- INEGI BIARE: https://www.inegi.org.mx/programas/biare/
-- INEGI ENBIARE 2021: https://www.inegi.org.mx/programas/enbiare/2021/
+El panel central requiere sesión docente autenticada y devuelve indicadores agregados, no filas individuales. Un código seudónimo y su HMAC no equivalen a anonimato absoluto.
 
 ## Publicación
-El archivo principal debe permanecer como:
-`index.html`
+GitHub Pages: Settings → Pages → Deploy from branch → main → /(root). El archivo principal permanece como `index.html`.
 
-Para GitHub Pages:
-Settings → Pages → Deploy from branch → main → /(root)
-
-## Defensa ante jurado
-La idea central:
-> "Los datos nos muestran lo que pasa; la ciencia nos ayuda a comprenderlo; valorarnos nos permite decidir qué hacer."
-
-La innovación no es solamente tener una página web. Es convertir evidencia pública en una experiencia educativa que lleva al estudiante de:
-**dato → reflexión → decisión → acción → evaluación**.
-
-## Próxima evolución recomendada
-- Validación formal del ISAC.
-- Piloto con muestra definida.
-- Pruebas de confiabilidad.
-- Pretest/Postest con diseño metodológico aprobado.
-- Análisis por dimensiones.
-- Tamaño de efecto.
-- Panel docente con filtros por periodo/grupo.
-- Política formal de retención y eliminación de datos.
+## Idea central
+“Los datos nos muestran lo que pasa; la ciencia nos ayuda a comprenderlo; valorarnos nos permite decidir qué hacer.”
