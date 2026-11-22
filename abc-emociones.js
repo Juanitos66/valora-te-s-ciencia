@@ -70,7 +70,6 @@ function abcCopyPhrase(){
   const value=el.textContent;
   if(navigator.clipboard&&window.isSecureContext){
     navigator.clipboard.writeText(value).then(()=>{
-      document.getElementById("abcCommitMsg")?.replaceChildren();
       alert("Frase copiada.");
     }).catch(()=>abcCopyFallback(value));
   }else abcCopyFallback(value);
