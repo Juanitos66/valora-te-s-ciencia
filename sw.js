@@ -1,4 +1,4 @@
-const CACHE = "s-ciencia-app-5-3-v1";
+const CACHE = "s-ciencia-app-5-4-v1";
 const CORE = ["./", "./index.html", "./config.js", "./manifest.json", "./icon.svg", "./app-install.js", "./abc-emociones.js", "./v5.js", "./jurado.js", "./ayuda.js"];
 self.addEventListener("install", event => {
  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting()));
