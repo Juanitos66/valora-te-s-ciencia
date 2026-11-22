@@ -420,6 +420,13 @@ select:focus-visible {
 .app-install p{margin:0;font-size:13px}.app-install strong{display:block;font-size:14px}.app-install-actions{display:flex;gap:8px;flex-wrap:wrap}.app-install .btn{white-space:nowrap}.app-install[hidden]{display:none!important}
 @media(max-width:620px){.app-install{align-items:flex-start;flex-direction:column}.app-install-actions{width:100%}.app-install-actions .btn{flex:1}}
 
+
+/* DESAFÍO S-CIENCIA · dinámica audiovisual en dos modalidades */
+.challenge-hero{background:linear-gradient(125deg,#14213d,#24528a 62%,#087f8c);color:#fff;border-radius:26px;padding:clamp(24px,4vw,42px);margin-bottom:20px}
+.challenge-kicker{font-size:11px;font-weight:900;letter-spacing:1.4px;color:#b9f4e9}.challenge-hero h2{font-size:clamp(30px,5vw,46px);line-height:1.1;margin:8px 0}.challenge-hero p{max-width:850px}
+.challenge-switch{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0}.challenge-switch button{border:1px solid #d7e3ef;background:#fff;color:#234866;border-radius:13px;padding:12px 17px;font-weight:800;cursor:pointer}.challenge-switch button.active{background:#183d67;color:#fff;border-color:#183d67}
+.challenge-video{background:#101d31;border-radius:20px;min-height:230px;display:grid;place-items:center;padding:24px;color:#fff;text-align:center}.challenge-video-placeholder{max-width:620px}.challenge-video-placeholder .play{font-size:46px;line-height:1}.challenge-video-placeholder h3{color:#fff;margin:10px 0}.challenge-video-placeholder p{color:#d9e6f2}.challenge-note{border:1px solid #dce8ef;background:#f4f9fc;border-radius:15px;padding:15px;margin:14px 0}.challenge-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}.challenge-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px}.challenge-card h3{margin-top:0;color:#173b5c}.challenge-card li{margin:7px 0}.challenge-reflection{background:#f1f8f7;border:1px solid #d5eae4;border-radius:17px;padding:18px;margin-top:16px}.challenge-reflection li{margin:8px 0}.challenge-mode[hidden]{display:none!important}
+@media(max-width:650px){.challenge-columns{grid-template-columns:1fr}.challenge-switch button{flex:1}.challenge-video{min-height:210px}}
 </style>
 </head>
 <body>
@@ -637,6 +644,53 @@ select:focus-visible {
   </article>
  </div>
  <div class="help-source"><b>Material de referencia:</b> Estrategia Nacional de Salud Mental para las y los Jóvenes, <i>El ABC de las emociones. Orientación para jóvenes</i>, Secretaría de Educación Pública. <a href="https://abcdelasemociones.sep.gob.mx/" target="_blank" rel="noopener noreferrer">Consultar materiales oficiales ↗</a></div>
+</section>
+
+
+<section id="desafio" class="view">
+ <div class="challenge-hero">
+  <span class="challenge-kicker">VALÓRATE CON S-CIENCIA 5.0 · APRENDER JUGANDO</span>
+  <h2>¡Activa tu mente!</h2>
+  <p><b>Desafío S-Ciencia:</b> observa, reacciona y decide. Una dinámica audiovisual para activar la atención, la participación y la reflexión sobre cómo respondemos ante los retos.</p>
+  <div class="pillRow"><span class="tag">Video · 4 min 24 s</span><span class="tag">Grupal e individual</span><span class="tag">Computadora y móvil</span></div>
+ </div>
+ <div class="card">
+  <h3>1. Elige cómo participar</h3>
+  <p>La misma experiencia puede realizarse con todo el grupo o de manera individual.</p>
+  <div class="challenge-switch" role="group" aria-label="Modalidad de participación">
+   <button id="challengeGroupBtn" class="active" type="button" onclick="setChallengeMode('group')">👥 Actividad grupal</button>
+   <button id="challengeSoloBtn" type="button" onclick="setChallengeMode('solo')">📱 Actividad individual</button>
+  </div>
+  <div id="challengeGroup" class="challenge-mode">
+   <div class="challenge-note"><b>Modalidad grupal</b><p>El docente proyecta el video para el grupo, explica las señales y facilita una breve conversación al finalizar.</p></div>
+   <div class="challenge-columns">
+    <div class="challenge-card"><h3>Antes de reproducir</h3><ul><li>Organicen al grupo en un espacio despejado.</li><li>Expliquen que la participación es voluntaria y que no se trata de competir.</li><li>Acuerden señales sencillas para responder a lo que aparece en pantalla.</li></ul></div>
+    <div class="challenge-card"><h3>Durante el video</h3><ul><li>Observen con atención lo que sucede.</li><li>Respondan a las indicaciones del docente con movimientos seguros.</li><li>Cuando aparezca un obstáculo, hagan una pausa y propongan una decisión.</li></ul></div>
+   </div>
+  </div>
+  <div id="challengeSolo" class="challenge-mode" hidden>
+   <div class="challenge-note"><b>Modalidad individual</b><p>Abre el video desde tu teléfono, tableta o computadora. Busca un lugar seguro, observa con atención y sigue las indicaciones sin apresurarte.</p></div>
+   <div class="challenge-columns">
+    <div class="challenge-card"><h3>Tu recorrido</h3><ol><li>Reproduce el video completo.</li><li>Identifica los momentos que requieren atención o una decisión.</li><li>Haz pausas si necesitas analizar lo que sucede.</li></ol></div>
+    <div class="challenge-card"><h3>Al terminar</h3><ol><li>Piensa cómo reaccionaste ante los retos.</li><li>Responde las preguntas de reflexión.</li><li>Elige una estrategia que puedas aplicar en tu vida cotidiana.</li></ol></div>
+   </div>
+  </div>
+ </div>
+ <div class="card" style="margin-top:18px">
+  <h3>2. Video del desafío</h3>
+  <div class="challenge-video" id="challengeVideoBox"><div class="challenge-video-placeholder"><div class="play">▶</div><h3>Tu video está listo para integrarse</h3><p>El archivo original ya fue recibido, pero todavía debe alojarse en un servicio de video para poder reproducirse públicamente desde la página. En cuanto tengamos el enlace de reproducción, quedará integrado aquí.</p><span class="tag">Video pendiente de vinculación</span></div></div>
+  <p class="small">Duración del archivo recibido: 4:24 · Formato MP4 · 1920 × 1080. No se ha publicado el archivo original en el repositorio.</p>
+ </div>
+ <div class="card" style="margin-top:18px">
+  <h3>3. Acuerdos para una participación segura</h3>
+  <ul><li>Realiza movimientos suaves y únicamente si el espacio es seguro.</li><li>No empujes, corras entre mobiliario ni hagas saltos que puedan provocarte una caída.</li><li>Puedes participar sentado o adaptar los movimientos a tus posibilidades.</li><li>La actividad no mide capacidades físicas ni establece ganadores.</li></ul>
+ </div>
+ <div class="challenge-reflection">
+  <span class="tag">Cierre socioemocional</span><h3>4. Reflexiona: ¿cómo respondes ante los obstáculos?</h3>
+  <ol><li>¿Qué hiciste cuando apareció una situación inesperada?</li><li>¿Te detuviste a observar o reaccionaste de inmediato?</li><li>¿Qué te ayudó a mantener la atención?</li><li>¿Cómo reaccionaste cuando cometiste un error?</li><li>¿Qué relación tiene este desafío con las decisiones de tu vida diaria?</li></ol>
+  <p><b>Idea para llevar:</b> ante un obstáculo, puedo detenerme, observar, pensar en alternativas y elegir una respuesta segura y responsable.</p>
+ </div>
+ <p class="small" style="margin-top:14px">Actividad educativa complementaria. No es una evaluación psicológica ni sustituye el acompañamiento docente.</p>
 </section>
 
 <section id="impacto" class="view">
@@ -1025,8 +1079,16 @@ const DIMS=["Ser consciente","Cuidarme","Identificar riesgos","Elegir","Necesito
 let answers={},lastAssessment=null;
 
 function nav(){
- const items=[["inicio","Inicio"],["emociones","ABC emociones"],["problema","Problema"],["datos","Datos"],["metodologia","Metodología"],["casos","Casos"],["radar","Mi Radar"],["prepost","Pre/Post"],["acciones","Acciones"],["apoyo","Red de apoyo"],["ayuda","¿Necesitas ayuda?"],["impacto","Impacto"],["viabilidad","Viabilidad"],["config","Configuración"],["jurado","Jurado"]];
+ const items=[["inicio","Inicio"],["emociones","ABC emociones"],["problema","Problema"],["datos","Datos"],["metodologia","Metodología"],["casos","Casos"],["radar","Mi Radar"],["prepost","Pre/Post"],["acciones","Acciones"],["apoyo","Red de apoyo"],["ayuda","¿Necesitas ayuda?"],["desafio","Desafío S-Ciencia"],["impacto","Impacto"],["viabilidad","Viabilidad"],["config","Configuración"],["jurado","Jurado"]];
  document.getElementById("nav").innerHTML=items.map(x=>`<button onclick="go('${x[0]}')">${x[1]}</button>`).join("");
+}
+
+function setChallengeMode(mode){
+ const group=mode==="group";
+ document.getElementById("challengeGroup").hidden=!group;
+ document.getElementById("challengeSolo").hidden=group;
+ document.getElementById("challengeGroupBtn").classList.toggle("active",group);
+ document.getElementById("challengeSoloBtn").classList.toggle("active",!group);
 }
 function go(id){
  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
