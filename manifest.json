@@ -1,17 +1,17 @@
 {
-  "name": "Valórate con S-Ciencia 5.0",
-  "short_name": "S-Ciencia 5.0",
-  "start_url": "./",
+  "id": "./",
+  "name": "Valórate con S-Ciencia",
+  "short_name": "Valórate",
+  "start_url": "./?origen=app",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#f4f7fa",
-  "theme_color": "#123b5d",
-  "description": "Plataforma educativa de autocuidado, formación socioemocional y toma de decisiones.",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#f5f7ff",
+  "theme_color": "#14213d",
+  "description": "Aplicación educativa juvenil gratuita de prevención, autocuidado, emociones y toma de decisiones de CECyTE 08.",
+  "categories": ["education", "health", "lifestyle"],
   "icons": [
-    {
-      "src": "icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
   ]
 }
